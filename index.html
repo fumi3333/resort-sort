@@ -17,41 +17,41 @@
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);
        font:15px/1.6 system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif}
-  header{padding:20px 16px 10px;max-width:960px;margin:0 auto}
-  h1{font-size:22px;margin:0 0 6px;display:flex;align-items:baseline}
+  header{padding:24px 16px 12px;max-width:980px;margin:0 auto}
+  h1{font-size:22px;margin:0 0 6px;display:flex;align-items:baseline;letter-spacing:-0.02em}
   .lede{color:var(--sub);font-size:13px;margin:0}
-  main{max-width:960px;margin:0 auto;padding:0 16px 60px}
+  main{max-width:980px;margin:0 auto;padding:0 16px 60px}
   .filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;
-           background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
-  label{display:block;font-size:12px;color:var(--sub);margin-bottom:4px;font-weight:600}
-  select,input{width:100%;padding:9px;border:1px solid var(--line);border-radius:8px;
+           background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px}
+  label{display:block;font-size:12px;color:var(--sub);margin-bottom:5px;font-weight:600}
+  select,input{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:6px;
                background:var(--bg);color:var(--ink);font-size:14px}
-  .checks{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:4px}
+  .checks{display:flex;flex-wrap:wrap;gap:10px 20px}
   .checks label{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink);margin:0;cursor:pointer;font-weight:400}
   .checks input{width:auto;cursor:pointer}
-  .count{font-size:14px;color:var(--sub);margin:12px 2px;font-weight:600}
-  .group{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden}
+  .count{font-size:13px;color:var(--sub);margin:14px 2px;font-weight:600}
+  .group{background:var(--card);border:1px solid var(--line);border-radius:10px;margin-bottom:16px;overflow:hidden}
   .group-head{padding:14px 16px;border-bottom:1px solid var(--line)}
-  .place{font-weight:700;font-size:16px}
-  .place-sub{font-size:13px;color:var(--sub);margin-top:2px}
+  .place{font-weight:700;font-size:15px}
+  .place-sub{font-size:12px;color:var(--sub);margin-top:2px}
   table{width:100%;border-collapse:collapse;font-size:13px}
-  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+  th,td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
   th{font-size:11px;color:var(--sub);font-weight:600;background:var(--bg)}
   .scroller{overflow-x:auto}
-  .wage{font-weight:700;font-size:16px;color:var(--accent)}
-  .dorm-full{color:var(--accent);font-weight:700}
-  .dorm-maybe{color:var(--warn);font-weight:700}
-  .raw{font-size:11px;color:var(--sub);white-space:normal;max-width:220px}
+  .wage{font-weight:700;font-size:16px;color:var(--accent);font-variant-numeric:tabular-nums}
+  .dorm-full{color:var(--accent);font-weight:600}
+  .dorm-maybe{color:var(--warn);font-weight:600}
+  .raw{font-size:11px;color:var(--sub);white-space:normal;max-width:200px}
   .lic{font-size:11px;color:var(--sub)}
-  .tag-badge{display:inline-block;padding:2px 6px;border-radius:4px;font-size:11px;margin-right:4px;background:var(--bg);border:1px solid var(--line)}
-  .tag-accent{background:var(--accent);color:#fff;border-color:var(--accent)}
-  a.cta{display:inline-block;padding:6px 12px;background:var(--accent);color:#fff;font-weight:700;text-decoration:none;border-radius:6px;font-size:12px}
-  a.cta:hover{opacity:0.85}
+  .badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:11px;margin-right:4px;background:var(--bg);border:1px solid var(--line);color:var(--ink)}
+  .badge-accent{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+  a.cta{display:inline-block;padding:6px 14px;background:var(--accent);color:#fff;font-weight:600;text-decoration:none;border-radius:6px;font-size:12px}
+  a.cta:hover{opacity:0.88}
   .empty{padding:50px 16px;text-align:center;color:var(--sub)}
-  footer{max-width:960px;margin:0 auto;padding:0 16px 16px;font-size:12px;color:var(--sub)}
-  .legal{max-width:960px;margin:0 auto;padding:0 16px 60px;font-size:12px;color:var(--sub)}
+  footer{max-width:980px;margin:0 auto;padding:0 16px 16px;font-size:12px;color:var(--sub)}
+  .legal{max-width:980px;margin:0 auto;padding:0 16px 60px;font-size:12px;color:var(--sub)}
   .legal details{border-top:1px solid var(--line);padding:10px 0}
-  .legal summary{cursor:pointer;font-weight:700;color:var(--ink);font-size:13px}
+  .legal summary{cursor:pointer;font-weight:600;color:var(--ink);font-size:13px}
   .legal p{margin:8px 0;line-height:1.7}
   .note{font-size:12px;color:var(--sub);margin:10px 0 0}
 </style>
@@ -59,7 +59,7 @@
 <body>
 <header>
   <h1>resort sort<span style="font-size:13px;color:var(--sub);font-weight:400;margin-left:8px">リゾートソート</span></h1>
-  <p class="lede">複数社（ダイブ・グッドマン・アルファ）の求人を横断検索。時給・個室・車・通勤条件でソート。</p>
+  <p class="lede">複数派遣会社（ダイブ・グッドマン・アルファリゾート）の求人を横断検索。時給・個室・車・通勤条件で比較。</p>
 </header>
 
 <main>
@@ -115,13 +115,13 @@
 
   <div class="filters" style="display:block">
     <div class="checks">
-      <label><input type="checkbox" id="c-car"> 🚗 車・マイカー持込OK</label>
-      <label><input type="checkbox" id="c-commute"> 🚶 通勤ラク（徒歩10分以内 / 送迎あり）</label>
-      <label><input type="checkbox" id="c-immediate"> ⚡ 即日スタート可</label>
-      <label><input type="checkbox" id="c-wifi"> 📶 部屋でWi-Fiあり</label>
-      <label><input type="checkbox" id="c-dormfree"> 🏠 寮費無料</label>
-      <label><input type="checkbox" id="c-newbie"> 🔰 未経験歓迎</label>
-      <label><input type="checkbox" id="c-friends"> 👫 友達・カップル歓迎</label>
+      <label><input type="checkbox" id="c-car"> 車・マイカー持込可</label>
+      <label><input type="checkbox" id="c-commute"> 通勤徒歩10分以内 / 送迎あり</label>
+      <label><input type="checkbox" id="c-immediate"> 即日スタート可</label>
+      <label><input type="checkbox" id="c-wifi"> 部屋Wi-Fiあり</label>
+      <label><input type="checkbox" id="c-dormfree"> 寮費無料</label>
+      <label><input type="checkbox" id="c-newbie"> 未経験歓迎</label>
+      <label><input type="checkbox" id="c-friends"> 友達・カップル可</label>
     </div>
   </div>
 
@@ -268,19 +268,19 @@ function render(){
           <div style="font-size:11px;color:var(--sub)">${j.wage_type || "時給"}</div>
         </td>
         <td class="${DORM_CLASS[j.dorm_type] || ""}">${j.dorm_type || "不明"}
-          ${j.dorm_cost === 0 ? '<span class="tag-badge tag-accent">寮費無料</span>' : ""}
+          ${j.dorm_cost === 0 ? '<span class="badge badge-accent">寮費無料</span>' : ""}
           <div class="raw">${j.dorm_type_raw || ""}</div>
         </td>
         <td>
           ${j.meals_per_day != null ? `<b>${j.meals_per_day}食無料</b>` : "—"}
         </td>
         <td>
-          ${j.car_ok ? '<span class="tag-badge">🚗 車OK</span>' : ""}
-          ${j.commute_text ? `<span class="tag-badge">🚶 ${j.commute_text}</span>` : ""}
-          ${j.dorm_wifi ? '<span class="tag-badge">📶 Wi-Fi</span>' : ""}
+          ${j.car_ok ? '<span class="badge">車持込可</span>' : ""}
+          ${j.commute_text ? `<span class="badge">${j.commute_text}</span>` : ""}
+          ${j.dorm_wifi ? '<span class="badge">Wi-Fi</span>' : ""}
         </td>
         <td>
-          ${j.immediate_ok ? '<span class="tag-badge tag-accent">⚡ 即日OK</span>' : ""}
+          ${j.immediate_ok ? '<span class="badge badge-accent">即日可</span>' : ""}
           <div class="lic">${j.agency}</div>
           <div class="lic">${j.agency_license_no || ""}</div>
         </td>
@@ -294,15 +294,15 @@ function render(){
   el.innerHTML = `
     <section class="group">
       <div class="group-head">
-        <div class="place">条件に合う求人一覧</div>
-        <div class="place-sub">時給の高い順に並んでいます。条件を絞り込んで比較してください。</div>
+        <div class="place">求人一覧</div>
+        <div class="place-sub">時給の高い順に表示。各社の公式求人ページへ直接遷移できます。</div>
       </div>
       <div class="scroller">
         <table>
           <thead>
             <tr>
               <th>エリア・職種</th>
-              <th>時給</th>
+              <th>給与</th>
               <th>寮</th>
               <th>食事</th>
               <th>車・通勤</th>
@@ -314,7 +314,7 @@ function render(){
         </table>
       </div>
       ${more > 0 ? `<div class="note" style="padding:12px 16px">
-        時給順に上位 ${shown.length} 件を表示しています。該当求人はあと ${more.toLocaleString()} 件あります。
+        上位 ${shown.length} 件を表示しています。該当求人はあと ${more.toLocaleString()} 件あります。
         上のエリアや条件で絞り込んでください。</div>` : ""}
     </section>`;
 }
