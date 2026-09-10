@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="resort sort（リゾートソート）は、各派遣会社のリゾートバイト求人を横断検索できるサービスです。時給だけでなく寮費・食費を差し引いた実質の手取りでソート・比較できます。">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>resort sort｜リゾートバイト求人を「手取り」でソート・比較</title>
+<style>
+  :root{
+    --bg:#f7f7f5; --card:#fff; --ink:#1c1c1a; --sub:#6b6b66;
+    --line:#e3e3df; --accent:#0f6e5c; --warn:#8a5a00; --warnbg:#fff6e0;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#15161a;--card:#1e2027;--ink:#e9e9e6;--sub:#9a9a95;
+          --line:#2c2f38;--accent:#4fd0b0;--warn:#e0b155;--warnbg:#2e2612;}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:15px/1.6 system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif}
+  header{padding:16px 16px 8px;max-width:900px;margin:0 auto}
+  h1{font-size:19px;margin:0 0 4px}
+  .lede{color:var(--sub);font-size:13px;margin:0}
+  .banner{max-width:900px;margin:12px auto;padding:10px 12px;background:var(--warnbg);
+          color:var(--warn);border-radius:8px;font-size:13px}
+  main{max-width:900px;margin:0 auto;padding:0 16px 60px}
+  .filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;
+           background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px}
+  label{display:block;font-size:12px;color:var(--sub);margin-bottom:4px}
+  select,input{width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;
+               background:var(--bg);color:var(--ink);font-size:14px}
+  .count{font-size:13px;color:var(--sub);margin:10px 2px}
+  .group{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:14px;overflow:hidden}
+  .group-head{padding:12px 14px;border-bottom:1px solid var(--line)}
+  .place{font-weight:700}
+  .place-sub{font-size:12px;color:var(--sub)}
+  .compare{display:inline-block;margin-top:6px;font-size:12px;color:var(--accent);font-weight:700}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+  th{font-size:11px;color:var(--sub);font-weight:600}
+  .scroller{overflow-x:auto}
+  .wage{font-weight:700;font-size:15px}
+  .best{color:var(--accent)}
+  .dorm-full{color:var(--accent);font-weight:700}
+  .dorm-maybe{color:var(--warn);font-weight:700}
+  .raw{font-size:11px;color:var(--sub);white-space:normal;max-width:220px}
+  .lic{font-size:11px;color:var(--sub)}
+  a.cta{color:var(--accent);font-weight:700;text-decoration:none}
+  .empty{padding:40px 16px;text-align:center;color:var(--sub)}
+  .assume{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:14px}
+  .assume summary{cursor:pointer;font-size:13px;font-weight:700}
+  .assume-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:10px}
+  .note{font-size:12px;color:var(--sub);margin:10px 0 0}
+  .net{font-weight:700;font-size:15px}
+  .net-best{color:var(--accent)}
+  .breakdown{font-size:11px;color:var(--sub);white-space:normal}
+  .flip{font-size:12px;color:var(--warn);font-weight:700;margin-top:4px}
+  .checks{display:flex;flex-wrap:wrap;gap:8px 16px}
+  .checks label{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink);margin:0;cursor:pointer}
+  .checks input{width:auto}
+  .tags{font-size:11px;color:var(--accent)}
+  footer{max-width:900px;margin:0 auto;padding:0 16px 16px;font-size:12px;color:var(--sub)}
+  .legal{max-width:900px;margin:0 auto;padding:0 16px 60px;font-size:12px;color:var(--sub)}
+  .legal details{border-top:1px solid var(--line);padding:10px 0}
+  .legal summary{cursor:pointer;font-weight:700;color:var(--ink);font-size:13px}
+  .legal p{margin:8px 0;line-height:1.7}
+</style>
+</head>
+<body>
+<header>
+  <h1>resort sort<span style="font-size:13px;color:var(--sub);font-weight:400;margin-left:8px">リゾートソート</span></h1>
+  <p class="lede">複数の派遣会社を横断検索。時給だけでなく「手元に残る額」でソート・比較。</p>
+</header>
+
+<div class="banner" id="banner"></div>
+
+<main>
+  <div class="filters">
+    <div>
+      <label for="f-area">エリア</label>
+      <select id="f-area"><option value="">すべて</option></select>
+    </div>
+    <div>
+      <label for="f-dorm">寮</label>
+      <select id="f-dorm">
+        <option value="">すべて</option>
+        <option value="完全個室">完全個室のみ</option>
+        <option value="個室以上">個室（相部屋の可能性あり）を含む</option>
+      </select>
+    </div>
+    <div>
+      <label for="f-wage">時給の下限</label>
+      <select id="f-wage">
+        <option value="0">指定なし</option>
+        <option value="1100">1,100円以上</option>
+        <option value="1200">1,200円以上</option>
+        <option value="1300">1,300円以上</option>
+        <option value="1400">1,400円以上</option>
+      </select>
+    </div>
+    <div>
+      <label for="f-meals">食事</label>
+      <select id="f-meals">
+        <option value="">指定なし</option>
+        <option value="1">1食以上</option>
+        <option value="2">2食以上</option>
+        <option value="3">3食</option>
+      </select>
+    </div>
+    <div>
+      <label for="f-pref">都道府県・エリア名</label>
+      <input id="f-pref" type="search" placeholder="例：北海道">
+    </div>
+    <div>
+      <label for="f-q">施設名・職種で絞る</label>
+      <input id="f-q" type="search" placeholder="例：スキー場">
+    </div>
+  </div>
+
+  <div class="filters">
+    <div class="checks">
+      <label><input type="checkbox" id="c-couple"> カップルで応募したい</label>
+      <label><input type="checkbox" id="c-friends"> 友達と応募したい</label>
+      <label><input type="checkbox" id="c-dormfree"> 寮費無料</label>
+      <label><input type="checkbox" id="c-nocar"> 車なしで生活できる</label>
+      <label><input type="checkbox" id="c-wifi"> 部屋でWi-Fiが使える</label>
+      <label><input type="checkbox" id="c-newbie"> 未経験OK</label>
+      <label><input type="checkbox" id="c-guarantee"> 最低保証時間あり</label>
+    </div>
+    <p class="note">チェックした条件は「その条件を満たすと明記されている求人」だけに絞ります。
+      記載がない求人は、満たさないものとして除外します（甘く見積もりません）。</p>
+  </div>
+
+  <details class="assume" open>
+    <summary>実質手取りの試算条件（自分の条件に変えられます）</summary>
+    <div class="assume-grid">
+      <div><label for="a-days">月の勤務日数</label><input id="a-days" type="number" value="22" min="1" max="31"></div>
+      <div><label for="a-hours">1日の勤務時間</label><input id="a-hours" type="number" value="8" min="1" max="12"></div>
+      <div><label for="a-meal">自炊・外食1食あたり</label><input id="a-meal" type="number" value="500" min="0" step="100"></div>
+    </div>
+    <p class="note">時給だけでは比べられません。寮費と食事の自己負担を引いた「手元に残る額」で並べています。
+      無料の食事以外は1日3食を自己負担として計算します。</p>
+  </details>
+
+  <div class="count" id="count"></div>
+  <div id="results"></div>
+</main>
+
+<footer id="foot"></footer>
+
+<section class="legal">
+  <details>
+    <summary>このサイトについて／運営者情報</summary>
+    <p><b>運営</b>：ZAX（個人事業）　連絡先：zax-official@fumiproject.dev</p>
+    <p><b>何をしているサイトか</b>：複数の派遣会社が公開しているリゾートバイト求人を集めて、
+      共通の項目に揃えて比較できるようにしています。時給だけでなく、寮費と食事の自己負担を
+      差し引いた「手元に残る額」で並べ替えられるのが特徴です。</p>
+    <p><b>やっていないこと</b>：応募の受付・仲介は行いません。求人への応募は、
+      各派遣会社の公式サイトで直接行っていただきます。当サイトは会員登録や
+      メールアドレスの収集を一切行いません。</p>
+    <p><b>広告について</b>：一部のリンクにはアフィリエイトプログラムを利用しています（PR）。
+      報酬の有無によって掲載順や評価を変えることはありません。
+      手元に残る額の計算には、どの求人にも同じ式を使っています。</p>
+  </details>
+
+  <details>
+    <summary>掲載データについて（正確性と限界）</summary>
+    <p><b>取得元</b>：各派遣会社が公開している求人ページ。取得時点は 2026年09月10日 です。</p>
+    <p><b>募集終了の扱い</b>：掲載期限が過ぎたものは除外していますが、
+      当サイトの取得後に募集が終了している場合があります。
+      最新の状況は必ずリンク先の公式ページでご確認ください。</p>
+    <p><b>「手元に残る額」について</b>：入力された勤務日数・勤務時間・食費の想定にもとづく
+      <b>試算</b>であり、実際の支給額を保証するものではありません。
+      税・社会保険料は含んでいません。残業、深夜手当、交通費、最低保証時間の有無によって
+      実際の金額は変わります。</p>
+    <p><b>取得できていない項目</b>：寮費、通勤手段、最低保証時間などは、
+      求人ページに記載がない場合があります。記載を確認できない項目は空欄にしており、
+      推測で補完していません。</p>
+    <p><b>掲載している派遣会社と労働者派遣事業許可番号</b>：
+      株式会社ダイブ（派13-300547）／株式会社アルファスタッフ（派23-300414）／
+      株式会社グッドマンサービス（派13-302871）</p>
+  </details>
+
+  <details>
+    <summary>プライバシーポリシー</summary>
+    <p>当サイトは、閲覧者の氏名・メールアドレス・電話番号などの個人情報を取得しません。
+      会員登録機能、問い合わせフォーム、メールマガジンのいずれも設けていません。</p>
+    <p>アクセス解析ツールを利用する場合があります。その際に収集される情報に、
+      個人を特定するものは含まれません。</p>
+    <p>当サイトのリンクから外部サイトへ移動された場合、
+      移動先での個人情報の取り扱いは各サイトの方針に従います。</p>
+  </details>
+
+  <details>
+    <summary>掲載の停止・訂正について（派遣会社の方へ）</summary>
+    <p>掲載内容の訂正や、貴社求人の掲載停止をご希望の場合は、
+      zax-official@fumiproject.dev までご連絡ください。速やかに対応いたします。</p>
+  </details>
+</section>
+
+<script>
+const DORM_CLASS = {"完全個室":"dorm-full","個室（相部屋の可能性あり）":"dorm-maybe"};
+const params = new URLSearchParams(location.search);
+const DATA_URL = "jobs.json";
+let JOBS = [];
+
+const yen = n => (n==null ? "—" : "¥" + n.toLocaleString());
+
+function ago(iso){
+  if(!iso) return "取得日時不明";
+  const h = Math.floor((Date.now() - new Date(iso)) / 3600000);
+  if (isNaN(h)) return "取得日時不明";
+  return h < 24 ? `${h}時間前に取得` : `${Math.floor(h/24)}日前に取得`;
+}
+
+function load(){
+  fetch(DATA_URL).then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(d => { JOBS = d.filter(j => j && j.id); init(); })
+    .catch(() => {
+      JOBS = []; init();
+      document.getElementById("results").innerHTML =
+        `<div class="empty">求人データを読み込めませんでした。時間をおいて再度お試しください。</div>`;
+    });
+}
+
+function init(){
+  const banner = document.getElementById("banner");
+  if (DATA_URL.includes("sample")) {
+    banner.textContent = "⚠ サンプル表示中。会社名も条件もすべて架空です。実データではありません。";
+  } else {
+    banner.style.display = "none";
+  }
+
+  const areas = [...new Set(JOBS.map(j => j.area_tag).filter(Boolean))].sort();
+  const sel = document.getElementById("f-area");
+  areas.forEach(a => sel.add(new Option(a, a)));
+
+  ["f-area","f-dorm","f-wage","f-meals","f-q","f-pref","a-days","a-hours","a-meal",
+   "c-couple","c-friends","c-dormfree","c-nocar","c-wifi","c-newbie","c-guarantee"].forEach(id =>
+    document.getElementById(id).addEventListener("input", render));
+  render();
+}
+
+// 実質手取り＝ 総支給 − 寮費 − 食事の自己負担
+// 時給だけで並べると、寮費無料・3食付きの低時給案件を不当に低く見せてしまう。
+function estimateNet(j){
+  const days  = +document.getElementById("a-days").value  || 0;
+  const hours = +document.getElementById("a-hours").value || 0;
+  const meal  = +document.getElementById("a-meal").value  || 0;
+  if (j.wage_type !== "時給" || !j.wage_min) return null;
+
+  const gross = j.wage_min * days * hours;
+  const dorm  = j.dorm_cost || 0;
+  // 無料でない食事は自己負担。meals_per_day が不明なら 0食無料として扱う（甘く見積もらない）
+  const freeMeals = j.meals_per_day || 0;
+  const selfMeals = Math.max(0, 3 - freeMeals) * 30;
+  const mealCost  = selfMeals * meal;
+
+  return { net: gross - dorm - mealCost, gross, dorm, mealCost, selfMeals };
+}
+
+// 条件に合う求人をフラットに並べる（施設をまたいで手取り順）。こちらが主役。
+function renderFlat(jobs, more){
+  const rows = jobs.map(j => {
+    const e = estimateNet(j);
+    return `
+      <tr>
+        <td>${j.workplace_name || "（施設名未取得）"}
+          <div class="lic">${j.prefecture || ""}${j.city || ""}　${j.job_category || ""}</div></td>
+        <td>${j.agency}<div class="lic">${j.agency_license_no || "許可番号未取得"}</div></td>
+        <td class="net">${e ? yen(e.net) : "—"}
+          ${e ? `<div class="breakdown">支給${yen(e.gross)}
+                 ${e.dorm ? " − 寮費" + yen(e.dorm) : ""}
+                 ${e.mealCost ? " − 食費" + yen(e.mealCost) : ""}</div>` : ""}</td>
+        <td class="wage">${yen(j.wage_min)}${j.wage_max ? "〜" + yen(j.wage_max) : ""}</td>
+        <td class="${DORM_CLASS[j.dorm_type] || ""}">${j.dorm_type || "不明"}
+          <div class="raw">${j.dorm_type_raw || ""}</div></td>
+        <td>${j.meals_per_day != null ? j.meals_per_day + "食" : "—"}</td>
+        <td>${j.commute || "—"}</td>
+        <td><a class="cta" href="${j.source_url}" target="_blank" rel="noopener nofollow sponsored">公式で見る</a>
+          <div class="lic">${ago(j.fetched_at)}</div></td>
+      </tr>`;
+  }).join("");
+
+  return `<section class="group">
+    <div class="group-head"><div class="place">条件に合う求人</div>
+      <div class="place-sub">手元に残る額の多い順。施設をまたいで比較できます</div></div>
+    <div class="scroller"><table>
+      <thead><tr><th>勤務先</th><th>派遣会社</th><th>手元に残る額 / 月</th><th>時給</th>
+        <th>寮</th><th>食事</th><th>通勤</th><th></th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+    ${more > 0 ? `<div class="note" style="padding:10px 14px">
+      手取りの多い順に${jobs.length}件を表示しています。該当はあと${more.toLocaleString()}件あります。
+      上の条件で絞り込んでください。</div>` : ""}
+  </section>`;
+}
+
+function passes(j){
+  const area = document.getElementById("f-area").value;
+  const dorm = document.getElementById("f-dorm").value;
+  const wage = +document.getElementById("f-wage").value;
+  const meals = document.getElementById("f-meals").value;
+  const q = document.getElementById("f-q").value.trim();
+
+  if (area && j.area_tag !== area) return false;
+  if (dorm === "完全個室" && j.dorm_type !== "完全個室") return false;
+  if (dorm === "個室以上" &&
+      !["完全個室","個室（相部屋の可能性あり）"].includes(j.dorm_type)) return false;
+  if (wage && !(j.wage_min >= wage)) return false;
+  if (meals && !(j.meals_per_day >= +meals)) return false;
+  if (q && !((j.workplace_name||"") + (j.job_category||"")).includes(q)) return false;
+
+  const pref = document.getElementById("f-pref").value.trim();
+  if (pref && !((j.prefecture||"") + (j.city||"") + (j.area_tag||"")).includes(pref)) return false;
+
+  // チェック条件は「明記されている求人だけ」を残す。null（記載なし）は満たさない扱いにする
+  const need = (id, fn) => !document.getElementById(id).checked || fn();
+  if (!need("c-couple",    () => j.couple_ok === true)) return false;
+  if (!need("c-friends",   () => j.friends_ok === true)) return false;
+  if (!need("c-dormfree",  () => j.dorm_cost === 0)) return false;
+  if (!need("c-nocar",     () => j.no_car_ok === true || j.commute === "送迎あり" || j.commute === "徒歩圏")) return false;
+  if (!need("c-wifi",      () => j.dorm_wifi === true)) return false;
+  if (!need("c-newbie",    () => j.inexperienced_ok === true)) return false;
+  if (!need("c-guarantee", () => (j.min_guaranteed_hours || 0) > 0)) return false;
+  return true;
+}
+
+function render(){
+  const hits = JOBS.filter(passes);
+
+  const groups = new Map();
+  hits.forEach(j => {
+    const k = j.workplace_key || j.id;
+    if (!groups.has(k)) groups.set(k, []);
+    groups.get(k).push(j);
+  });
+
+  // 主役は「条件に合う求人の一覧」。同じ現場を複数社が出していたら、それは上に立てて強調する。
+  // 1社しか出していない現場でも比較は成立する（条件が近い他社の求人と並ぶため）。
+  // 「複数社が募集」は派遣会社の数で判定する。件数で数えると、
+  // 同じ会社が同じ施設に複数の求人を出しているだけのものを「複数社」と誤表示してしまう。
+  const agencyCount = g => new Set(g.map(j => j.agency)).size;
+  const multiGroups = [...groups.values()].filter(g => agencyCount(g) > 1);
+  const singleJobs  = [...groups.values()].filter(g => agencyCount(g) === 1).flat();
+
+  document.getElementById("count").textContent =
+    `${hits.length}件` +
+    (multiGroups.length ? `　うち${multiGroups.length}現場は複数社が同じ現場を募集中` : "");
+
+  const el = document.getElementById("results");
+  if (!hits.length) {
+    el.innerHTML = `<div class="empty">条件に合う求人がありません。</div>`;
+    return;
+  }
+
+  // 1万件を一度に描画するとページが固まる。上位だけ描いて、絞り込みを促す。
+  const PAGE = 100;
+  const sortedSingles = singleJobs.sort((a,b) =>
+    (estimateNet(b)?.net ?? -1) - (estimateNet(a)?.net ?? -1));
+  const shown = sortedSingles.slice(0, PAGE);
+  const singleSection = shown.length ? [{ __flat: true, jobs: shown,
+    more: sortedSingles.length - shown.length }] : [];
+
+  el.innerHTML = [...multiGroups, ...singleSection].map(g => {
+    if (g.__flat) return renderFlat(g.jobs, g.more);
+    const head = g[0];
+    const est = new Map(g.map(j => [j.id, estimateNet(j)]));
+    const nets = g.map(j => est.get(j.id)?.net).filter(n => n != null);
+    const bestNet  = nets.length ? Math.max(...nets) : null;
+    const bestWage = Math.max(...g.map(j => j.wage_min || 0));
+
+    // 時給1位と手取り1位が食い違う現場は、時給だけ見ると判断を誤る現場
+    const wageWinner = g.find(j => j.wage_min === bestWage);
+    const netWinner  = g.find(j => est.get(j.id)?.net === bestNet);
+    const flipped = g.length > 1 && bestNet != null && wageWinner && netWinner
+                    && wageWinner.id !== netWinner.id;
+
+    const rows = [...g].sort((a,b) => (est.get(b.id)?.net ?? -1) - (est.get(a.id)?.net ?? -1))
+      .map(j => {
+      const e = est.get(j.id);
+      return `
+      <tr>
+        <td>${j.agency}<div class="lic">${j.agency_license_no || "許可番号未取得"}</div></td>
+        <td class="net ${e && e.net===bestNet && g.length>1 ? "net-best" : ""}">
+          ${e ? yen(e.net) : "—"}
+          ${e ? `<div class="breakdown">支給${yen(e.gross)}
+                 ${e.dorm ? " − 寮費" + yen(e.dorm) : ""}
+                 ${e.mealCost ? " − 食費" + yen(e.mealCost) : ""}</div>` : ""}
+        </td>
+        <td class="wage ${j.wage_min===bestWage && g.length>1 ? "best" : ""}">
+          ${yen(j.wage_min)}${j.wage_max ? "〜" + yen(j.wage_max) : ""}
+        </td>
+        <td class="${DORM_CLASS[j.dorm_type] || ""}">${j.dorm_type || "不明"}
+          <div class="raw">${j.dorm_type_raw || ""}</div></td>
+        <td>${j.meals_per_day != null ? j.meals_per_day + "食" : "—"}</td>
+        <td>${j.dorm_bath || "—"}</td>
+        <td>${j.commute || "—"}</td>
+        <td><a class="cta" href="${j.source_url}" target="_blank" rel="noopener nofollow sponsored">公式で見る</a>
+          <div class="lic">${ago(j.fetched_at)}</div></td>
+      </tr>`;}).join("");
+
+    return `<section class="group">
+      <div class="group-head">
+        <div class="place">${head.workplace_name || "（施設名未取得）"}</div>
+        <div class="place-sub">${head.prefecture || ""}${head.city || ""}　${head.job_category || ""}</div>
+        ${(() => { const n = new Set(g.map(j => j.agency)).size;
+           return n > 1 ? `<div class="compare">この現場は${n}社が募集 — 条件を比較できます</div>` : ""; })()}
+        ${flipped ? `<div class="flip">⚠ 時給が一番高いのは${wageWinner.agency}ですが、
+          寮費と食事を引くと${netWinner.agency}の方が手元に残ります</div>` : ""}
+      </div>
+      <div class="scroller"><table>
+        <thead><tr><th>派遣会社</th><th>手元に残る額 / 月</th><th>時給</th><th>寮</th><th>食事</th><th>風呂</th><th>通勤</th><th></th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </section>`;
+  }).join("");
+}
+
+document.getElementById("foot").innerHTML =
+  `当サイトは各派遣会社から許諾を得て求人情報を掲載し、公式ページへリンクしています。` +
+  `応募の仲介は行わず、閲覧者の個人情報は取得しません。リンクには広告が含まれます（PR）。`;
+
+load();
+</script>
+</body>
+</html>
