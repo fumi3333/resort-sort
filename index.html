@@ -3764,6 +3764,11 @@ function applyQuickTerm(days){
   document.getElementById('f-start-date').value = startStr;
   document.getElementById('f-end-date').value = endStr;
   document.getElementById('f-term-select').value = String(days >= 90 ? 90 : (days >= 60 ? 60 : (days >= 30 ? 30 : 14)));
+  
+  document.querySelectorAll('.btn-chip').forEach(b => b.classList.remove('active'));
+  const targetBtn = Array.from(document.querySelectorAll('.btn-chip')).find(b => b.textContent.includes(days >= 90 ? '3ヶ月' : (days >= 60 ? '2ヶ月' : (days >= 30 ? '1ヶ月' : (days >= 14 ? '2週間' : '1週間')))));
+  if (targetBtn) targetBtn.classList.add('active');
+
   updatePeriodDisplay();
   render();
 }
@@ -3772,6 +3777,7 @@ function clearTerm(){
   document.getElementById('f-start-date').value = '';
   document.getElementById('f-end-date').value = '';
   document.getElementById('f-term-select').value = '';
+  document.querySelectorAll('.btn-chip').forEach(b => b.classList.remove('active'));
   updatePeriodDisplay();
   render();
 }
@@ -3787,6 +3793,10 @@ function updatePeriodDisplay(){
       disp.textContent = `期間：${diff}日間（約${(diff/30).toFixed(1)}ヶ月）`;
       return;
     }
+  } else if (s && !e) {
+    const d = new Date(s);
+    disp.textContent = `期間：${d.getMonth()+1}月${d.getDate()}日〜（開始可能日）`;
+    return;
   }
   if (t) {
     const map = {'14':'超短期（1〜2週間）', '30':'短期（1ヶ月前後）', '60':'中期（2〜3ヶ月）', '90':'長期（3ヶ月以上）'};
@@ -3798,11 +3808,22 @@ function updatePeriodDisplay(){
 
 function getJobMinMonths(j){
   const p = (j.period_raw || "") + " " + (j.dorm_type_raw || "");
-  if (p.includes("1週間") || p.includes("2週間") || p.includes("短期OK") || p.includes("超短期")) return 0.5;
-  if (p.includes("1ヶ月") || p.includes("1カ月") || j.short_term_ok) return 1.0;
-  if (p.includes("2ヶ月") || p.includes("2カ月")) return 2.0;
-  if (p.includes("3ヶ月") || p.includes("3カ月")) return 3.0;
-  if (p.includes("6ヶ月") || p.includes("6カ月")) return 6.0;
+  if (p.includes("1週間") || p.includes("一週間")) return 0.25;
+  if (p.includes("2週間") || p.includes("二週間") || p.includes("2週間以内")) return 0.5;
+  if (p.includes("3週間") || p.includes("三週間")) return 0.75;
+  if (p.includes("短期OK") || p.includes("超短期")) return 0.5;
+
+  // レンジ表現: "1ヶ月〜6ヶ月", "2ヶ月〜6ヶ月以上", "1カ月〜3カ月"
+  const mRange = p.match(/(\d+)\s*ヶ?月?[\s~〜～\-]+(\d+)\s*ヶ?月?/);
+  if (mRange) return parseFloat(mRange[1]);
+
+  const mSingle = p.match(/(\d+)\s*ヶ?月以上/);
+  if (mSingle) return parseFloat(mSingle[1]);
+
+  const mSingle2 = p.match(/(\d+)\s*ヶ?月/);
+  if (mSingle2) return parseFloat(mSingle2[1]);
+
+  if (j.short_term_ok) return 1.0;
   return 1.0;
 }
 
@@ -3814,6 +3835,12 @@ function init(){
     if (el) {
       el.addEventListener("input", () => {
         if (id.startsWith("f-start") || id.startsWith("f-end") || id.startsWith("f-term")) {
+          // 開始日を入力して終了日が空の場合、逆転防止や連動
+          const s = document.getElementById('f-start-date').value;
+          const e = document.getElementById('f-end-date').value;
+          if (s && e && new Date(e) < new Date(s)) {
+            document.getElementById('f-end-date').value = s;
+          }
           updatePeriodDisplay();
         }
         render();
@@ -3840,7 +3867,7 @@ function passes(j){
     if (!q.split(/\s+/).every(w => hay.includes(w))) return false;
   }
 
-  // 期間フィルター（フライト予約風）
+  // 期間フィルター（フライト予約風・精密マッチ）
   const sDate = document.getElementById("f-start-date").value;
   const eDate = document.getElementById("f-end-date").value;
   const tSel = document.getElementById("f-term-select").value;
@@ -3850,12 +3877,31 @@ function passes(j){
     if (diff > 0) maxDays = diff;
   } else if (tSel) {
     maxDays = parseInt(tSel, 10);
+  } else if (sDate && !eDate) {
+    // 開始日だけ入れた場合は最低1ヶ月として期間判定しつつ、開始月で照合
+    maxDays = 30;
   }
 
   if (maxDays !== null) {
     const jobMin = getJobMinMonths(j);
     const userMonths = maxDays / 30;
-    if (userMonths < jobMin * 0.8) return false;
+    // ユーザーの期間が求人の最低期間に足りない場合は除外（許容誤差10%）
+    if (userMonths < jobMin * 0.9) return false;
+  }
+
+  // 開始可能月の照合（求人側に月指定がある場合）
+  if (sDate) {
+    const sMonth = new Date(sDate).getMonth() + 1;
+    const p = j.period_raw || "";
+    const mMatches = p.match(/(\d{1,2})月/g);
+    if (mMatches && mMatches.length > 0) {
+      const isFlexible = /即日|急募|随時|いつでも/.test(p);
+      if (!isFlexible) {
+        const jMonths = mMatches.map(m => parseInt(m, 10));
+        const matched = jMonths.some(jm => Math.abs(jm - sMonth) <= 1 || (sMonth <= jm && jm <= sMonth + 2));
+        if (!matched && !j.immediate_ok) return false;
+      }
+    }
   }
 
   if (document.getElementById("c-ski").checked) {
