@@ -135,12 +135,16 @@
 
 <style>
   :root{
-    --bg:#f7f7f5; --card:#fff; --ink:#1c1c1a; --sub:#6b6b66;
-    --line:#e3e3df; --accent:#0f6e5c; --warn:#8a5a00; --warnbg:#fff6e0;
+    --bg:#ffffff; --card:#ffffff; --ink:#111111; --sub:#666666;
+    --line:#e8e8e8; --accent:#111111; --accent-hover:#333333;
+    --warn:#555555; --warnbg:#f4f4f4;
   }
   @media (prefers-color-scheme:dark){
-    :root{--bg:#15161a;--card:#1e2027;--ink:#e9e9e6;--sub:#9a9a95;
-          --line:#2c2f38;--accent:#4fd0b0;--warn:#e0b155;--warnbg:#2e2612;}
+    :root{
+      --bg:#09090b; --card:#121215; --ink:#ededed; --sub:#8e8e93;
+      --line:#27272a; --accent:#ededed; --accent-hover:#cccccc;
+      --warn:#a1a1aa; --warnbg:#1c1c20;
+    }
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);
@@ -166,18 +170,18 @@
   th,td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
   th{font-size:11px;color:var(--sub);font-weight:600;background:var(--bg)}
   .scroller{overflow-x:auto}
-  .wage{font-weight:700;font-size:16px;color:var(--accent);font-variant-numeric:tabular-nums}
-  .dorm-full{color:var(--accent);font-weight:600}
-  .dorm-maybe{color:var(--warn);font-weight:600}
+  .wage{font-weight:700;font-size:16px;color:var(--ink);font-variant-numeric:tabular-nums}
+  .dorm-full{color:var(--ink);font-weight:600}
+  .dorm-maybe{color:var(--sub);font-weight:600}
   .raw{font-size:11px;color:var(--sub);white-space:normal;max-width:200px}
   .lic{font-size:11px;color:var(--sub)}
   .badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:11px;margin-right:4px;background:var(--bg);border:1px solid var(--line);color:var(--ink)}
-  .badge-accent{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
-  a.cta{display:inline-block;padding:6px 14px;background:var(--accent);color:#fff;font-weight:600;text-decoration:none;border-radius:6px;font-size:12px}
-  a.cta:hover{opacity:0.88}
-  .btn-chip{padding:4px 10px;background:var(--bg);border:1px solid var(--line);border-radius:20px;font-size:12px;cursor:pointer;color:var(--ink);transition:all .15s}
-  .btn-chip:hover{border-color:var(--accent);color:var(--accent)}
-  .btn-chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .badge-accent{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:600}
+  a.cta{display:inline-block;padding:7px 15px;background:var(--accent);color:var(--bg);font-weight:600;text-decoration:none;border-radius:6px;font-size:12px;transition:background .15s}
+  a.cta:hover{background:var(--accent-hover)}
+  .btn-chip{padding:4px 12px;background:var(--card);border:1px solid var(--line);border-radius:20px;font-size:12px;cursor:pointer;color:var(--ink);transition:all .15s}
+  .btn-chip:hover{border-color:var(--ink)}
+  .btn-chip.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
   .empty{padding:50px 16px;text-align:center;color:var(--sub)}
   
   /* SEO解説・FAQセクション */
@@ -261,23 +265,23 @@
 
   <div class="filters" style="display:block">
     <div style="font-weight:700;font-size:13px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between">
-      <span>勤務可能期間で絞り込み（フライト予約風）</span>
-      <span id="period-display" style="font-size:12px;color:var(--accent);font-weight:600">期間：指定なし</span>
+      <span>勤務期間</span>
+      <span id="period-display" style="font-size:12px;color:var(--sub);font-weight:600">指定なし</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px">
       <div>
-        <label for="f-start-date">開始可能日（行き）</label>
+        <label for="f-start-date">開始可能日</label>
         <input type="date" id="f-start-date">
       </div>
       <div>
-        <label for="f-end-date">終了予定日（帰り）</label>
+        <label for="f-end-date">終了予定日</label>
         <input type="date" id="f-end-date">
       </div>
       <div>
         <label for="f-term-select">希望期間（目安）</label>
         <select id="f-term-select">
           <option value="">指定なし</option>
-          <option value="14">超短期（1〜2週間以内）</option>
+          <option value="14">超短期（1〜2週間）</option>
           <option value="30">短期（1ヶ月前後）</option>
           <option value="60">中期（2〜3ヶ月）</option>
           <option value="90">長期（3ヶ月以上）</option>
@@ -290,7 +294,7 @@
       <button type="button" class="btn-chip" onclick="applyQuickTerm(30)">1ヶ月</button>
       <button type="button" class="btn-chip" onclick="applyQuickTerm(60)">2ヶ月</button>
       <button type="button" class="btn-chip" onclick="applyQuickTerm(90)">3ヶ月以上</button>
-      <button type="button" class="btn-chip" onclick="clearTerm()" style="color:var(--sub)">期間クリア</button>
+      <button type="button" class="btn-chip" onclick="clearTerm()" style="color:var(--sub)">クリア</button>
     </div>
   </div>
 
@@ -307,14 +311,23 @@
     </div>
   </div>
 
-  <div style="background:var(--card);border:1px solid var(--accent);border-left:4px solid var(--accent);border-radius:8px;padding:14px 16px;margin-bottom:16px;font-size:13px;line-height:1.7">
-    <div style="font-weight:700;color:var(--accent);margin-bottom:4px">失敗しないリゾバ応募の鉄則（複数社エントリー推奨）</div>
-    <p style="margin:0 0 6px;color:var(--ink)">
-      同じホテル・旅館・スキー場でも、<b>派遣会社によって時給が100円〜200円異なる（月収で3万〜5万円の差）</b>ことが日常茶飯事です。
-      高時給案件は枠がすぐ埋まるため、<b>ダイブ・グッドマン・アルファリゾートなど2〜3社に同時にWeb登録（面談予約）</b>を行い、最も好条件を提示してくれた会社を選ぶのが業界の常識です。
-    </p>
-    <div style="font-size:12px;color:var(--sub)">
-      ※登録後の電話面談は15分程度（履歴書不要・私服OK・合否なしのカウンセリング）です。希望条件（勤務地・時期・個室）を伝えるだけで自分に合った非公開求人も紹介してもらえます。
+  <div style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:16px">
+    <div style="font-weight:700;font-size:13px;color:var(--ink);margin-bottom:8px">
+      リゾバ応募で損しない3大ルール（時給・手取り最大化）
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;font-size:12px;line-height:1.6">
+      <div style="border-left:2px solid var(--ink);padding-left:8px">
+        <div style="font-weight:700;color:var(--ink)">1. 派遣会社で時給が月3〜5万円違う</div>
+        <div style="color:var(--sub)">同じ勤務先でも会社で時給差あり。2〜3社に同時登録して最高時給を選ぶのが常識です。</div>
+      </div>
+      <div style="border-left:2px solid var(--ink);padding-left:8px">
+        <div style="font-weight:700;color:var(--ink)">2. 面談は「合否なし」の15分相談</div>
+        <div style="color:var(--sub)">履歴書不要・私服でOK。希望（個室・時期）を伝えるだけで非公開求人も案内されます。</div>
+      </div>
+      <div style="border-left:2px solid var(--ink);padding-left:8px">
+        <div style="font-weight:700;color:var(--ink)">3. 知らない着信（0120/03）は派遣会社</div>
+        <div style="color:var(--sub)">Web応募後にかかってくる確認電話に出るだけで受付完了。折り返しでもOKです。</div>
+      </div>
     </div>
   </div>
 
@@ -369,7 +382,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1001982/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -402,7 +415,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1005512/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -435,7 +448,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1007267/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -468,7 +481,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1003001/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -501,7 +514,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002418/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -534,7 +547,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002466/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -567,7 +580,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1005109/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -600,7 +613,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1005985/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -633,7 +646,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/198504" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -666,7 +679,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/227214" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -699,7 +712,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/232147" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -732,7 +745,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1001478/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -765,7 +778,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1001846/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -798,7 +811,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002422/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -831,7 +844,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002546/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -864,7 +877,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1007462/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -897,7 +910,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1007933/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -930,7 +943,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002572/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -963,7 +976,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.a-resort.jp/job/28108" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -996,7 +1009,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1006668/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1029,7 +1042,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002612/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1062,7 +1075,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1005971/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1095,7 +1108,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/220652" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1128,7 +1141,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/220653" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1161,7 +1174,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/222504" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1194,7 +1207,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223290" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1227,7 +1240,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223292" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1260,7 +1273,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223293" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1293,7 +1306,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223294" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1326,7 +1339,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223303" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1359,7 +1372,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223304" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1392,7 +1405,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223308" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1425,7 +1438,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223329" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1458,7 +1471,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223333" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1491,7 +1504,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223335" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1524,7 +1537,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223339" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1557,7 +1570,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223340" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1590,7 +1603,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223341" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1623,7 +1636,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223342" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1656,7 +1669,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223344" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1689,7 +1702,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223345" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1722,7 +1735,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223347" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1755,7 +1768,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223349" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1788,7 +1801,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223350" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1821,7 +1834,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223351" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1854,7 +1867,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223352" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1887,7 +1900,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/231166" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1920,7 +1933,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/231170" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1953,7 +1966,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/232186" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -1986,7 +1999,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.a-resort.jp/job/28288" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2019,7 +2032,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.a-resort.jp/job/28290" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2052,7 +2065,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.a-resort.jp/job/28291" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2085,7 +2098,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.a-resort.jp/job/28292" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2118,7 +2131,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.a-resort.jp/job/28293" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2151,7 +2164,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1000246/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2184,7 +2197,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1000933/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2217,7 +2230,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1001079/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2250,7 +2263,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002532/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2283,7 +2296,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002822/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2316,7 +2329,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1005101/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2349,7 +2362,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1006334/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2382,7 +2395,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002627/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2415,7 +2428,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1005401/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2448,7 +2461,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002424/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2481,7 +2494,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/146316" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2514,7 +2527,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/174207" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2547,7 +2560,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/198494" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2580,7 +2593,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/210907" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2613,7 +2626,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/214435" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2646,7 +2659,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/225210" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2679,7 +2692,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/228400" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2712,7 +2725,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/230180" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2745,7 +2758,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/230181" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2778,7 +2791,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/230182" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2811,7 +2824,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/231243" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2844,7 +2857,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/231245" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2877,7 +2890,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/231249" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2910,7 +2923,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/231250" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2943,7 +2956,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/231259" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -2976,7 +2989,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/231260" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3009,7 +3022,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/231261" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3042,7 +3055,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/233002" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3075,7 +3088,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/233206" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3108,7 +3121,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/233207" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3141,7 +3154,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/233208" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3174,7 +3187,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/233568" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3207,7 +3220,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/233569" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3240,7 +3253,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/233586" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3273,7 +3286,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/233587" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3306,7 +3319,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.a-resort.jp/job/23758" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3339,7 +3352,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.a-resort.jp/job/23759" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3372,7 +3385,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1000316/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3405,7 +3418,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1000643/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3438,7 +3451,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1001253/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3471,7 +3484,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1001364/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3504,7 +3517,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1001818/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3537,7 +3550,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002057/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3570,7 +3583,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002459/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3603,7 +3616,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002540/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
 
@@ -3636,7 +3649,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002604/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">5時間前更新</div>
+          <div class="lic">6時間前更新</div>
         </td>
       </tr>
           </tbody>
@@ -3867,7 +3880,7 @@ function passes(j){
     if (!q.split(/\s+/).every(w => hay.includes(w))) return false;
   }
 
-  // 期間フィルター（フライト予約風・精密マッチ）
+  // 期間フィルター（精密マッチ）
   const sDate = document.getElementById("f-start-date").value;
   const eDate = document.getElementById("f-end-date").value;
   const tSel = document.getElementById("f-term-select").value;
