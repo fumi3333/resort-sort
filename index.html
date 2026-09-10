@@ -35,7 +35,7 @@
     {
       "@type": "ItemList",
       "name": "高時給リゾートバイト求人一覧",
-      "numberOfItems": 6706,
+      "numberOfItems": 6704,
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -176,6 +176,9 @@
   .badge-accent{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
   a.cta{display:inline-block;padding:6px 14px;background:var(--accent);color:#fff;font-weight:600;text-decoration:none;border-radius:6px;font-size:12px}
   a.cta:hover{opacity:0.88}
+  .btn-chip{padding:4px 10px;background:var(--bg);border:1px solid var(--line);border-radius:20px;font-size:12px;cursor:pointer;color:var(--ink);transition:all .15s}
+  .btn-chip:hover{border-color:var(--accent);color:var(--accent)}
+  .btn-chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
   .empty{padding:50px 16px;text-align:center;color:var(--sub)}
   
   /* SEO解説・FAQセクション */
@@ -256,6 +259,41 @@
   </div>
 
   <div class="filters" style="display:block">
+    <div style="font-weight:700;font-size:13px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between">
+      <span>勤務可能期間で絞り込み（フライト予約風）</span>
+      <span id="period-display" style="font-size:12px;color:var(--accent);font-weight:600">期間：指定なし</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px">
+      <div>
+        <label for="f-start-date">開始可能日（行き）</label>
+        <input type="date" id="f-start-date">
+      </div>
+      <div>
+        <label for="f-end-date">終了予定日（帰り）</label>
+        <input type="date" id="f-end-date">
+      </div>
+      <div>
+        <label for="f-term-select">希望期間（目安）</label>
+        <select id="f-term-select">
+          <option value="">指定なし</option>
+          <option value="14">超短期（1〜2週間以内）</option>
+          <option value="30">短期（1ヶ月前後）</option>
+          <option value="60">中期（2〜3ヶ月）</option>
+          <option value="90">長期（3ヶ月以上）</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px">
+      <button type="button" class="btn-chip" onclick="applyQuickTerm(7)">1週間</button>
+      <button type="button" class="btn-chip" onclick="applyQuickTerm(14)">2週間</button>
+      <button type="button" class="btn-chip" onclick="applyQuickTerm(30)">1ヶ月</button>
+      <button type="button" class="btn-chip" onclick="applyQuickTerm(60)">2ヶ月</button>
+      <button type="button" class="btn-chip" onclick="applyQuickTerm(90)">3ヶ月以上</button>
+      <button type="button" class="btn-chip" onclick="clearTerm()" style="color:var(--sub)">期間クリア</button>
+    </div>
+  </div>
+
+  <div class="filters" style="display:block">
     <div class="checks">
       <label><input type="checkbox" id="c-ski"> スキー場・リフト券付き</label>
       <label><input type="checkbox" id="c-car"> 車・マイカー持込可</label>
@@ -279,7 +317,7 @@
     </div>
   </div>
 
-  <div class="count" id="count">該当 6,706 件 / 全 6,706 件</div>
+  <div class="count" id="count">該当 6,704 件 / 全 6,704 件</div>
   <div id="results">
     <section class="group">
       <div class="group-head">
@@ -321,6 +359,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩5分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2週間〜6ヶ月</span>
         </td>
         <td>
           <span class="badge badge-accent">即日可</span>
@@ -329,7 +368,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1001982/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -353,6 +392,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2週間〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -361,7 +401,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1005512/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -385,6 +425,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2週間〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -393,7 +434,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1007267/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -417,6 +458,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2週間〜3ヶ月</span>
         </td>
         <td>
           
@@ -425,7 +467,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1003001/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -439,7 +481,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="dorm-full">完全個室
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">個室</div>
         </td>
         <td>
@@ -449,6 +491,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩3分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2週間〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -457,7 +500,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002418/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -481,6 +524,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩2分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2ヶ月〜6ヶ月</span>
         </td>
         <td>
           
@@ -489,7 +533,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002466/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -503,7 +547,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="dorm-full">完全個室
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">個室</div>
         </td>
         <td>
@@ -513,6 +557,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩3分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">1ヶ月〜2ヶ月</span>
         </td>
         <td>
           
@@ -521,7 +566,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1005109/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -545,6 +590,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2ヶ月〜6ヶ月</span>
         </td>
         <td>
           
@@ -553,7 +599,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1005985/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -577,6 +623,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -585,7 +632,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/198504" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -609,6 +656,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 給与 （1）時給 2000円 対象の方 ・中華料理経験者 ・通い勤務が可能な方 注</span>
         </td>
         <td>
           
@@ -617,7 +665,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/227214" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -631,7 +679,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="">相部屋
-          
+          <span class="badge badge-accent">寮費無料</span>
           <div class="raw">相部屋（2人） / 男女共通寮</div>
         </td>
         <td>
@@ -641,6 +689,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）12月上旬 〜 3ヶ月以上 給与 （1）時給 2000円 対象の方 ホテル、旅館での調理経験者 調理師免許必須 更</span>
         </td>
         <td>
           
@@ -649,7 +698,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/232147" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -673,6 +722,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩10分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2週間〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -681,7 +731,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1001478/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -705,6 +755,7 @@
           
           <span class="badge">徒歩4分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">1ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -713,7 +764,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1001846/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -727,7 +778,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="dorm-full">完全個室
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">個室</div>
         </td>
         <td>
@@ -737,6 +788,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩1分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">3週間〜6ヶ月以上</span>
         </td>
         <td>
           <span class="badge badge-accent">即日可</span>
@@ -745,7 +797,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002422/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -769,6 +821,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">3ヶ月〜6ヶ月</span>
         </td>
         <td>
           
@@ -777,7 +830,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002546/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -791,7 +844,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="dorm-full">完全個室
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">個室</div>
         </td>
         <td>
@@ -801,6 +854,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">1週間〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -809,7 +863,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1007462/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -823,7 +877,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="dorm-full">完全個室
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">個室</div>
         </td>
         <td>
@@ -833,6 +887,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">3ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -841,7 +896,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1007933/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -855,7 +910,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="">寮なし
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">寮なし</div>
         </td>
         <td>
@@ -865,6 +920,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">3ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -873,7 +929,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002572/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -897,6 +953,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩5分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2週間以内</span>
         </td>
         <td>
           <span class="badge badge-accent">即日可</span>
@@ -905,7 +962,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.a-resort.jp/job/28108" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -929,6 +986,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩2分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -937,7 +995,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1006668/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -951,7 +1009,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="">寮なし
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">寮なし</div>
         </td>
         <td>
@@ -961,6 +1019,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">3ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           <span class="badge badge-accent">即日可</span>
@@ -969,7 +1028,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002612/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -993,6 +1052,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩3分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">3ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -1001,7 +1061,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1005971/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1015,7 +1075,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="dorm-full">完全個室
-          
+          <span class="badge badge-accent">寮費無料</span>
           <div class="raw">個室（共有スペース有り） / 男女共通寮</div>
         </td>
         <td>
@@ -1025,6 +1085,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩5分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）12月中旬 〜 3ヶ月以上 給与 （1）時給 1800円 対象の方 中華調理経験が1年以上ある方 ※3/31まで勤</span>
         </td>
         <td>
           
@@ -1033,7 +1094,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/220652" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1047,7 +1108,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="dorm-full">完全個室
-          
+          <span class="badge badge-accent">寮費無料</span>
           <div class="raw">個室（共有スペース有り） / 男女共通寮</div>
         </td>
         <td>
@@ -1057,6 +1118,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩5分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）12月下旬 〜 3ヶ月以上 給与 （1）時給 1800円 対象の方 中華調理経験が1年以上ある方 ※3/31まで勤</span>
         </td>
         <td>
           
@@ -1065,7 +1127,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/220653" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1089,6 +1151,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 2ヶ月以上 給与 （1）時給 1800円 対象の方 和食もしく洋食調理業務経験 ※3年以上の調</span>
         </td>
         <td>
           
@@ -1097,7 +1160,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/222504" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1121,6 +1184,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1129,7 +1193,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223290" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1153,6 +1217,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1161,7 +1226,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223292" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1185,6 +1250,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1193,7 +1259,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223293" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1217,6 +1283,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1225,7 +1292,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223294" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1249,6 +1316,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1257,7 +1325,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223303" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1281,6 +1349,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1289,7 +1358,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223304" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1313,6 +1382,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1321,7 +1391,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223308" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1345,6 +1415,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1353,7 +1424,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223329" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1377,6 +1448,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1385,7 +1457,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223333" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1409,6 +1481,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1417,7 +1490,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223335" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1441,6 +1514,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1449,7 +1523,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223339" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1473,6 +1547,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1481,7 +1556,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223340" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1505,6 +1580,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1513,7 +1589,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223341" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1537,6 +1613,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1545,7 +1622,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223342" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1569,6 +1646,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1577,7 +1655,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223344" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1601,6 +1679,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1609,7 +1688,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223345" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1633,6 +1712,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1641,7 +1721,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223347" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1665,6 +1745,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩10分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1673,7 +1754,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223349" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1697,6 +1778,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1705,7 +1787,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223350" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1729,6 +1811,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1737,7 +1820,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223351" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1761,6 +1844,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -1769,7 +1853,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/223352" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1793,6 +1877,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩10分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）12月上旬 〜 3ヶ月以上 給与 （1）時給 1800円 対象の方 調理勤務実績のある方 更新日時：2026年8月</span>
         </td>
         <td>
           
@@ -1801,7 +1886,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/231166" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1825,6 +1910,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩10分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）2月上旬 〜 1ヶ月以上 給与 （1）時給 1800円 対象の方 調理勤務実績のある方 更新日時：2026年8月2</span>
         </td>
         <td>
           
@@ -1833,7 +1919,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/231170" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1857,6 +1943,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）10月上旬 〜 3ヶ月以上 （2）10月上旬・中旬 〜 3ヶ月以上 （3）10月中いつでも 〜 3ヶ月以上 給与</span>
         </td>
         <td>
           
@@ -1865,7 +1952,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/232186" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1889,6 +1976,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩9分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2週間以内</span>
         </td>
         <td>
           <span class="badge badge-accent">即日可</span>
@@ -1897,7 +1985,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.a-resort.jp/job/28288" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1921,6 +2009,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩9分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2週間以内</span>
         </td>
         <td>
           
@@ -1929,7 +2018,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.a-resort.jp/job/28290" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1953,6 +2042,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩9分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2週間以内</span>
         </td>
         <td>
           
@@ -1961,7 +2051,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.a-resort.jp/job/28291" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -1985,6 +2075,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩9分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2週間以内</span>
         </td>
         <td>
           
@@ -1993,7 +2084,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.a-resort.jp/job/28292" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2017,6 +2108,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩9分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2週間以内</span>
         </td>
         <td>
           
@@ -2025,7 +2117,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.a-resort.jp/job/28293" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2049,6 +2141,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2ヶ月〜3ヶ月</span>
         </td>
         <td>
           
@@ -2057,7 +2150,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1000246/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2071,7 +2164,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="">寮なし
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">寮なし</div>
         </td>
         <td>
@@ -2081,6 +2174,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">3ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -2089,7 +2183,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1000933/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2103,7 +2197,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="dorm-full">完全個室
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">1ルーム個室</div>
         </td>
         <td>
@@ -2113,6 +2207,7 @@
           
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">3ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -2121,7 +2216,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1001079/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2135,7 +2230,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="dorm-full">完全個室
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">客室寮 / 個室</div>
         </td>
         <td>
@@ -2145,6 +2240,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩10分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -2153,7 +2249,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002532/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2167,7 +2263,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="dorm-full">完全個室
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">1ルーム個室</div>
         </td>
         <td>
@@ -2177,6 +2273,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -2185,7 +2282,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002822/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2199,7 +2296,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="dorm-full">完全個室
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">1ルーム個室</div>
         </td>
         <td>
@@ -2209,6 +2306,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">3ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -2217,7 +2315,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1005101/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2241,6 +2339,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩2分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">1ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -2249,7 +2348,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1006334/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2263,7 +2362,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="">寮なし
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">寮なし</div>
         </td>
         <td>
@@ -2273,6 +2372,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">3ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -2281,7 +2381,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002627/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2295,7 +2395,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="">相部屋
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">相部屋</div>
         </td>
         <td>
@@ -2305,6 +2405,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩5分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">3ヶ月〜6ヶ月</span>
         </td>
         <td>
           
@@ -2313,7 +2414,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1005401/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2327,7 +2428,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="">寮なし
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">寮なし</div>
         </td>
         <td>
@@ -2337,6 +2438,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">3ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           <span class="badge badge-accent">即日可</span>
@@ -2345,7 +2447,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002424/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2369,6 +2471,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 4ヶ月以上 （2）10月中いつでも 〜 4ヶ月以上 （3）11月中いつでも 〜 4ヶ月以上 給</span>
         </td>
         <td>
           
@@ -2377,7 +2480,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/146316" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2401,6 +2504,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩2分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 4ヶ月以上 （2）10月中いつでも 〜 4ヶ月以上 （3）11月中いつでも 〜 4ヶ月以上 給</span>
         </td>
         <td>
           
@@ -2409,7 +2513,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/174207" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2433,6 +2537,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 （2）10月中いつでも 〜 3ヶ月以上 （3）11月中いつでも 〜 3ヶ月以上 給</span>
         </td>
         <td>
           
@@ -2441,7 +2546,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/198494" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2465,6 +2570,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩10分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）11月下旬 〜 2ヶ月以上 給与 （1）時給 1700円 対象の方 大型バス運転経験&amp;amp;雪道運転経験者 大型</span>
         </td>
         <td>
           
@@ -2473,7 +2579,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/210907" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2497,6 +2603,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩10分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）12月上旬・中旬 〜 2ヶ月以上 給与 （1）時給 1700円 対象の方 大型バス運転経験&amp;amp;雪道運転経験者</span>
         </td>
         <td>
           
@@ -2505,7 +2612,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/214435" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2529,6 +2636,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）10月中いつでも 〜 3ヶ月以上 給与 （1）時給 1700円 対象の方 なにかしらの接客経験のある方 更新日時：</span>
         </td>
         <td>
           
@@ -2537,7 +2645,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/225210" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2561,6 +2669,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月上旬・中旬 〜 4ヶ月以上 給与 （1）時給 1700円 対象の方 なにかしらの受付・フロント経験のある方 更</span>
         </td>
         <td>
           
@@ -2569,7 +2678,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/228400" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2593,6 +2702,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩10分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 給与 （1）時給 1700円 対象の方 ホテルや料亭での和食調理業務の経験がある方</span>
         </td>
         <td>
           
@@ -2601,7 +2711,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/230180" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2625,6 +2735,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩10分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 4ヶ月以上 給与 （1）時給 1700円 対象の方 ホテルや料亭での和食調理業務の経験がある方</span>
         </td>
         <td>
           
@@ -2633,7 +2744,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/230181" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2657,6 +2768,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩10分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 6ヶ月以上 給与 （1）時給 1700円 対象の方 ホテルや料亭での和食調理業務の経験がある方</span>
         </td>
         <td>
           
@@ -2665,7 +2777,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/230182" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2689,6 +2801,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月上旬・中旬 〜 3ヶ月以上 給与 （1）時給 1700円 対象の方 飲食店またはホテル厨房での調理補助経験（１</span>
         </td>
         <td>
           
@@ -2697,7 +2810,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/231243" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2721,6 +2834,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中旬 〜 4ヶ月以上 給与 （1）時給 1700円 対象の方 飲食店またはホテル厨房での調理補助経験（１年以上</span>
         </td>
         <td>
           
@@ -2729,7 +2843,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/231245" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2753,6 +2867,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月上旬・中旬 〜 3ヶ月以上 給与 （1）時給 1700円 対象の方 飲食店またはホテル厨房での調理補助経験（１</span>
         </td>
         <td>
           
@@ -2761,7 +2876,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/231249" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2785,6 +2900,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中旬 〜 4ヶ月以上 給与 （1）時給 1700円 対象の方 飲食店またはホテル厨房での調理補助経験（１年以上</span>
         </td>
         <td>
           
@@ -2793,7 +2909,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/231250" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2817,6 +2933,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月上旬 〜 1ヶ月以上 給与 （1）時給 1700円 対象の方 ※調理師免許必須 ホテルやレストランにて洋食調理</span>
         </td>
         <td>
           
@@ -2825,7 +2942,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/231259" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2849,6 +2966,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月上旬 〜 2ヶ月以上 給与 （1）時給 1700円 対象の方 ※調理師免許必須 ホテルやレストランにて洋食調理</span>
         </td>
         <td>
           
@@ -2857,7 +2975,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/231260" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2881,6 +2999,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月上旬・中旬 〜 2ヶ月以上 給与 （1）時給 1700円 対象の方 ※調理師免許必須 ホテルやレストランにて洋</span>
         </td>
         <td>
           
@@ -2889,7 +3008,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/231261" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2913,6 +3032,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）10月上旬 〜 4ヶ月以上 給与 （1）時給 1700円 対象の方 西洋料理・フレンチの調理経験が3年以上ある方</span>
         </td>
         <td>
           
@@ -2921,7 +3041,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/233002" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2945,6 +3065,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩10分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 給与 （1）時給 1700円 対象の方 ホテルや料亭での和食調理業務の経験がある方</span>
         </td>
         <td>
           
@@ -2953,7 +3074,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/233206" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -2977,6 +3098,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩10分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 4ヶ月以上 給与 （1）時給 1700円 対象の方 ホテルや料亭での和食調理業務の経験がある方</span>
         </td>
         <td>
           
@@ -2985,7 +3107,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/233207" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -3009,6 +3131,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩10分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）10月上旬 〜 6ヶ月以上 給与 （1）時給 1700円 対象の方 ホテルや料亭での和食調理業務の経験がある方 ※</span>
         </td>
         <td>
           
@@ -3017,7 +3140,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/233208" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -3041,6 +3164,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）10月上旬 〜 3ヶ月以上 給与 （1）時給 1700円 対象の方 和食調理業務経験 ※年数問わず 更新日時：20</span>
         </td>
         <td>
           
@@ -3049,7 +3173,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/233568" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -3073,6 +3197,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）9月中いつでも 〜 3ヶ月以上 給与 （1）時給 1700円 対象の方 ホテル・料亭などで鉄板焼きの調理経験がある</span>
         </td>
         <td>
           
@@ -3081,7 +3206,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/233569" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -3105,6 +3230,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）10月上旬 〜 3ヶ月以上 給与 （1）時給 1700円 対象の方 ホテル・料亭などで鉄板焼きの調理経験がある方</span>
         </td>
         <td>
           
@@ -3113,7 +3239,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/233586" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -3137,6 +3263,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">（1）10月中いつでも 〜 3ヶ月以上 給与 （1）時給 1700円 対象の方 ホテル・料亭などで鉄板焼きの調理経験があ</span>
         </td>
         <td>
           
@@ -3145,7 +3272,7 @@
         </td>
         <td>
           <a class="cta" href="https://resortbaito-dive.com/works/233587" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -3169,6 +3296,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2週間以内</span>
         </td>
         <td>
           
@@ -3177,7 +3305,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.a-resort.jp/job/23758" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -3201,6 +3329,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2週間以内</span>
         </td>
         <td>
           
@@ -3209,7 +3338,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.a-resort.jp/job/23759" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -3223,7 +3352,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="dorm-full">完全個室
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">1ルーム個室</div>
         </td>
         <td>
@@ -3233,6 +3362,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩10分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -3241,7 +3371,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1000316/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -3255,7 +3385,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="">寮なし
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">寮なし</div>
         </td>
         <td>
@@ -3265,6 +3395,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -3273,7 +3404,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1000643/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -3287,7 +3418,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="">寮なし
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">寮なし</div>
         </td>
         <td>
@@ -3297,6 +3428,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">1ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -3305,7 +3437,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1001253/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -3319,7 +3451,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="">不明
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">寮あり（内定時決定）</div>
         </td>
         <td>
@@ -3329,6 +3461,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">2ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           <span class="badge badge-accent">即日可</span>
@@ -3337,7 +3470,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1001364/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -3351,7 +3484,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="">寮なし
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">寮なし</div>
         </td>
         <td>
@@ -3361,6 +3494,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩8分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">3ヶ月〜6ヶ月</span>
         </td>
         <td>
           
@@ -3369,7 +3503,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1001818/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -3383,7 +3517,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="">寮なし
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">寮なし</div>
         </td>
         <td>
@@ -3393,6 +3527,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">6ヶ月以上</span>
         </td>
         <td>
           <span class="badge badge-accent">即日可</span>
@@ -3401,7 +3536,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002057/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -3415,7 +3550,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="">寮なし
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">寮なし</div>
         </td>
         <td>
@@ -3425,6 +3560,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩15分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">3ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -3433,7 +3569,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002459/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -3447,7 +3583,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="">寮なし
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">寮なし</div>
         </td>
         <td>
@@ -3457,6 +3593,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">徒歩2分</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">1ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           
@@ -3465,7 +3602,7 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002540/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
 
@@ -3479,7 +3616,7 @@
           <div style="font-size:11px;color:var(--sub)">時給</div>
         </td>
         <td class="">寮なし
-          <span class="badge badge-accent">寮費無料</span>
+          
           <div class="raw">寮なし</div>
         </td>
         <td>
@@ -3489,6 +3626,7 @@
           <span class="badge">車持込可</span>
           <span class="badge">送迎あり</span>
           <span class="badge">Wi-Fi</span>
+          <span class="badge">3ヶ月〜6ヶ月以上</span>
         </td>
         <td>
           <span class="badge badge-accent">即日可</span>
@@ -3497,14 +3635,14 @@
         </td>
         <td>
           <a class="cta" href="https://www.resortbaito.com/1002604/" target="_blank" rel="noopener nofollow sponsored">空き状況・詳細（公式）</a>
-          <div class="lic">7時間前更新</div>
+          <div class="lic">0時間前更新</div>
         </td>
       </tr>
           </tbody>
         </table>
       </div>
       <div class="note" id="more-note" style="padding:12px 16px">
-        上位 100 件を表示しています。該当求人はあと 6,606 件あります。
+        上位 100 件を表示しています。該当求人はあと 6,604 件あります。
         上のエリアや条件で絞り込んでください。
       </div>
     </section>
@@ -3614,10 +3752,70 @@ function load(){
     });
 }
 
+function applyQuickTerm(days){
+  const now = new Date();
+  const startStr = now.toISOString().split('T')[0];
+  const end = new Date(now.getTime() + days * 24 * 60 * 60 * 1000);
+  const endStr = end.toISOString().split('T')[0];
+  document.getElementById('f-start-date').value = startStr;
+  document.getElementById('f-end-date').value = endStr;
+  document.getElementById('f-term-select').value = String(days >= 90 ? 90 : (days >= 60 ? 60 : (days >= 30 ? 30 : 14)));
+  updatePeriodDisplay();
+  render();
+}
+
+function clearTerm(){
+  document.getElementById('f-start-date').value = '';
+  document.getElementById('f-end-date').value = '';
+  document.getElementById('f-term-select').value = '';
+  updatePeriodDisplay();
+  render();
+}
+
+function updatePeriodDisplay(){
+  const s = document.getElementById('f-start-date').value;
+  const e = document.getElementById('f-end-date').value;
+  const t = document.getElementById('f-term-select').value;
+  const disp = document.getElementById('period-display');
+  if (s && e) {
+    const diff = Math.round((new Date(e) - new Date(s)) / (1000 * 60 * 60 * 24));
+    if (diff > 0) {
+      disp.textContent = `期間：${diff}日間（約${(diff/30).toFixed(1)}ヶ月）`;
+      return;
+    }
+  }
+  if (t) {
+    const map = {'14':'超短期（1〜2週間）', '30':'短期（1ヶ月前後）', '60':'中期（2〜3ヶ月）', '90':'長期（3ヶ月以上）'};
+    disp.textContent = `期間：${map[t] || t + '日'}`;
+    return;
+  }
+  disp.textContent = '期間：指定なし';
+}
+
+function getJobMinMonths(j){
+  const p = (j.period_raw || "") + " " + (j.dorm_type_raw || "");
+  if (p.includes("1週間") || p.includes("2週間") || p.includes("短期OK") || p.includes("超短期")) return 0.5;
+  if (p.includes("1ヶ月") || p.includes("1カ月") || j.short_term_ok) return 1.0;
+  if (p.includes("2ヶ月") || p.includes("2カ月")) return 2.0;
+  if (p.includes("3ヶ月") || p.includes("3カ月")) return 3.0;
+  if (p.includes("6ヶ月") || p.includes("6カ月")) return 6.0;
+  return 1.0;
+}
+
 function init(){
   ["f-region","f-dorm","f-wage","f-meals","f-q",
-   "c-ski","c-car","c-commute","c-immediate","c-wifi","c-dormfree","c-newbie","c-friends"].forEach(id =>
-    document.getElementById(id).addEventListener("input", render));
+   "f-start-date","f-end-date","f-term-select",
+   "c-ski","c-car","c-commute","c-immediate","c-wifi","c-dormfree","c-newbie","c-friends"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener("input", () => {
+        if (id.startsWith("f-start") || id.startsWith("f-end") || id.startsWith("f-term")) {
+          updatePeriodDisplay();
+        }
+        render();
+      });
+    }
+  });
 }
 
 function passes(j){
@@ -3636,6 +3834,24 @@ function passes(j){
   if (q) {
     const hay = [j.workplace_name, j.prefecture, j.city, j.job_category, j.dorm_type_raw, j.period_raw].filter(Boolean).join(" ").toLowerCase();
     if (!q.split(/\s+/).every(w => hay.includes(w))) return false;
+  }
+
+  // 期間フィルター（フライト予約風）
+  const sDate = document.getElementById("f-start-date").value;
+  const eDate = document.getElementById("f-end-date").value;
+  const tSel = document.getElementById("f-term-select").value;
+  let maxDays = null;
+  if (sDate && eDate) {
+    const diff = Math.round((new Date(eDate) - new Date(sDate)) / (1000 * 60 * 60 * 24));
+    if (diff > 0) maxDays = diff;
+  } else if (tSel) {
+    maxDays = parseInt(tSel, 10);
+  }
+
+  if (maxDays !== null) {
+    const jobMin = getJobMinMonths(j);
+    const userMonths = maxDays / 30;
+    if (userMonths < jobMin * 0.8) return false;
   }
 
   if (document.getElementById("c-ski").checked) {
@@ -3676,6 +3892,18 @@ function render(){
   const more = sorted.length - shown.length;
 
   const rows = shown.map(j => {
+    const dCost = j.dorm_cost;
+    const dRaw = j.dorm_type_raw || "";
+    let dBadge = "";
+    if (dCost === 0) {
+      dBadge = '<span class="badge badge-accent">寮費無料</span>';
+    } else if (dRaw.includes("補助") || dRaw.includes("手当") || dRaw.includes("負担")) {
+      dBadge = '<span class="badge" style="color:var(--warn)">寮費補助あり</span>';
+    } else if (dCost !== null && dCost !== undefined) {
+      dBadge = '<span class="badge">寮費有料</span>';
+    }
+    const pBadge = j.period_raw ? `<span class="badge">${j.period_raw}</span>` : "";
+
     return `
       <tr>
         <td>
@@ -3687,7 +3915,7 @@ function render(){
           <div style="font-size:11px;color:var(--sub)">${j.wage_type || "時給"}</div>
         </td>
         <td class="${DORM_CLASS[j.dorm_type] || ""}">${j.dorm_type || "不明"}
-          ${j.dorm_cost === 0 ? '<span class="badge badge-accent">寮費無料</span>' : ""}
+          ${dBadge}
           <div class="raw">${j.dorm_type_raw || ""}</div>
         </td>
         <td>
@@ -3697,6 +3925,7 @@ function render(){
           ${j.car_ok ? '<span class="badge">車持込可</span>' : ""}
           ${j.commute_text ? `<span class="badge">${j.commute_text}</span>` : ""}
           ${j.dorm_wifi ? '<span class="badge">Wi-Fi</span>' : ""}
+          ${pBadge}
         </td>
         <td>
           ${j.immediate_ok ? '<span class="badge badge-accent">即日可</span>' : ""}
