@@ -265,6 +265,36 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://resort-sort.fumiproject.dev/feature/short-term/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://resort-sort.fumiproject.dev/feature/couple/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://resort-sort.fumiproject.dev/feature/high-wage/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://resort-sort.fumiproject.dev/feature/ski/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://resort-sort.fumiproject.dev/feature/dorm-free/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://resort-sort.fumiproject.dev/about/</loc>
     <lastmod>2026-09-12</lastmod>
     <changefreq>weekly</changefreq>
