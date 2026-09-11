@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>リゾートバイト求人14,328件を調べた結果｜時給・寮・募集終了率の実測データ</title>
+<meta name="description" content="派遣会社3社のリゾートバイト求人14,328件を取得し、時給の分布、寮タイプの割合、募集終了求人の混入率を実測した調査記録。同じ勤務地に複数社が出している求人の時給差も掲載。">
+<link rel="canonical" href="https://resort-sort.fumiproject.dev/data/">
+<style>
+:root{--bg:#fff;--ink:#111;--sub:#666;--line:#e2e2e2;--mark:#f6f6f4}
+@media (prefers-color-scheme:dark){:root{--bg:#111;--ink:#eee;--sub:#999;--line:#2c2c2c;--mark:#1c1c1c}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.75 system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif}
+main{max-width:760px;margin:0 auto;padding:24px 20px 80px}
+h1{font-size:23px;line-height:1.45;margin:8px 0 4px}
+h2{font-size:17px;margin:40px 0 10px;padding-top:18px;border-top:1px solid var(--line)}
+p{margin:12px 0}
+.meta{font-size:13px;color:var(--sub);margin:0 0 24px}
+.lead{background:var(--mark);padding:14px 16px;font-size:15px;line-height:1.8}
+.lead ul{margin:8px 0 0;padding-left:20px}
+.lead li{margin:4px 0}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--sub);font-weight:600;font-size:12px}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+.note{font-size:13px;color:var(--sub)}
+.scroll{overflow-x:auto}
+a{color:var(--ink)}
+footer{border-top:1px solid var(--line);margin-top:48px;padding-top:16px;font-size:12px;color:var(--sub)}
+</style>
+</head>
+<body>
+<main>
+
+<p class="meta"><a href="/">resort sort</a></p>
+
+<h1>リゾートバイト求人14,328件を調べた結果</h1>
+<p class="meta">調査日 2026年9月11日／対象 株式会社ダイブ・株式会社アルファスタッフ・株式会社グッドマンサービスの公開求人</p>
+
+<div class="lead">
+  <b>この調査で分かったこと</b>
+  <ul>
+    <li>取得した14,328件のうち<b>3,075件（21.5%）は募集が終了済み</b>だった</li>
+    <li>掲載中の求人の<b>時給の中央値は1,250円</b>。1,400円以上は21.1%</li>
+    <li>寮は<b>67.4%が完全個室</b>、10.2%が相部屋、20.8%は寮なし</li>
+    <li>同じ勤務地に複数社が求人を出していた9件のうち、<b>最大で時給400円の差</b>があった</li>
+  </ul>
+</div>
+
+<h2>調査の方法</h2>
+<p>3社が公開している求人ページを取得し、掲載されている項目（時給・勤務地・職種・寮タイプ・食事）を共通の形式に揃えて集計しました。取得は各社が <code>robots.txt</code> で公開しているサイトマップを辿る方法で行い、クロール間隔の指定に従っています。</p>
+<p>記載が確認できなかった項目は空欄のままにしており、推定で補っていません。そのため項目ごとに集計の母数が異なります。</p>
+
+<h2>募集終了の求人が21.5%混ざっていた</h2>
+<table>
+  <tr><th>区分</th><th class="n">件数</th><th class="n">割合</th></tr>
+  <tr><td>取得した求人</td><td class="n">14,328</td><td class="n">100%</td></tr>
+  <tr><td>募集終了</td><td class="n">3,075</td><td class="n">21.5%</td></tr>
+  <tr><td>掲載対象（募集中）</td><td class="n">6,704</td><td class="n">—</td></tr>
+</table>
+<p class="note">掲載対象が募集中の全件と一致しないのは、時給の記載が取れなかったものと、対象外の会社分を除いているためです。募集終了は各社の掲載期限（構造化データの <code>validThrough</code>）とページ内の表記から判定しました。</p>
+
+<h2>時給の分布</h2>
+<p>時給表記のある6,483件の集計です。最低960円、中央値1,250円、平均1,271円、最高3,000円。</p>
+<table>
+  <tr><th>時給帯</th><th class="n">件数</th><th class="n">割合</th></tr>
+  <tr><td>1,099円以下</td><td class="n">362</td><td class="n">5.6%</td></tr>
+  <tr><td>1,100〜1,199円</td><td class="n">1,209</td><td class="n">18.6%</td></tr>
+  <tr><td>1,200〜1,299円</td><td class="n">2,091</td><td class="n">32.3%</td></tr>
+  <tr><td>1,300〜1,399円</td><td class="n">1,453</td><td class="n">22.4%</td></tr>
+  <tr><td>1,400円以上</td><td class="n">1,368</td><td class="n">21.1%</td></tr>
+</table>
+
+<h2>職種によって中央値が220円違う</h2>
+<p>50件以上ある職種の時給中央値です。</p>
+<table>
+  <tr><th>職種</th><th class="n">時給の中央値</th><th class="n">件数</th></tr>
+  <tr><td>調理（資格不要）</td><td class="n">1,500円</td><td class="n">183</td></tr>
+  <tr><td>調理</td><td class="n">1,430円</td><td class="n">314</td></tr>
+  <tr><td>宿泊予約・事務</td><td class="n">1,300円</td><td class="n">82</td></tr>
+  <tr><td>売店・販売</td><td class="n">1,300円</td><td class="n">182</td></tr>
+  <tr><td>フロント</td><td class="n">1,300円</td><td class="n">288</td></tr>
+  <tr><td>仲居・客室係</td><td class="n">1,300円</td><td class="n">56</td></tr>
+  <tr><td>調理補助</td><td class="n">1,283円</td><td class="n">762</td></tr>
+</table>
+
+<h2>寮タイプの割合</h2>
+<table>
+  <tr><th>寮タイプ</th><th class="n">件数</th><th class="n">割合</th></tr>
+  <tr><td>完全個室</td><td class="n">4,519</td><td class="n">67.4%</td></tr>
+  <tr><td>寮なし（自宅から通勤）</td><td class="n">1,397</td><td class="n">20.8%</td></tr>
+  <tr><td>相部屋</td><td class="n">687</td><td class="n">10.2%</td></tr>
+  <tr><td>個室（相部屋になる場合あり）</td><td class="n">23</td><td class="n">0.3%</td></tr>
+  <tr><td>判定できず・記載なし</td><td class="n">78</td><td class="n">1.2%</td></tr>
+</table>
+<p class="note">「個室」とだけ書かれていても、共有スペース付きや男女共通寮など条件が異なる場合があります。求人ページの原文もあわせて確認してください。寮費が無料と明記されていたのは1,779件でした。</p>
+
+<h2>食事は2食無料が最多</h2>
+<table>
+  <tr><th>無料になる食事</th><th class="n">件数</th></tr>
+  <tr><td>3食</td><td class="n">910</td></tr>
+  <tr><td>2食</td><td class="n">3,265</td></tr>
+  <tr><td>1食</td><td class="n">1,459</td></tr>
+  <tr><td>なし</td><td class="n">99</td></tr>
+  <tr><td>記載なし</td><td class="n">971</td></tr>
+</table>
+
+<h2>勤務地の分布</h2>
+<table>
+  <tr><th>都道府県</th><th class="n">件数</th></tr>
+  <tr><td>北海道</td><td class="n">971</td></tr>
+  <tr><td>沖縄県</td><td class="n">697</td></tr>
+  <tr><td>長野県</td><td class="n">626</td></tr>
+  <tr><td>静岡県</td><td class="n">512</td></tr>
+  <tr><td>神奈川県</td><td class="n">402</td></tr>
+  <tr><td>東京都</td><td class="n">333</td></tr>
+  <tr><td>岐阜県</td><td class="n">314</td></tr>
+  <tr><td>群馬県</td><td class="n">240</td></tr>
+</table>
+
+<h2>同じ勤務地でも、派遣会社によって時給が違う</h2>
+<p>求人ページには施設名が書かれていないことが多いため、構造化データに含まれる郵便番号と番地が一致する求人を「同じ勤務地」として突き合わせました。該当したのは9件です。</p>
+<div class="scroll">
+<table>
+  <tr><th>勤務地</th><th class="n">ダイブ</th><th class="n">アルファ・リゾート</th><th class="n">差</th></tr>
+  <tr><td>北海道 虻田郡留寿都村</td><td class="n">2,000円</td><td class="n">1,600円</td><td class="n">400円</td></tr>
+  <tr><td>北海道 勇払郡占冠村</td><td class="n">1,700円</td><td class="n">1,400円</td><td class="n">300円</td></tr>
+  <tr><td>静岡県 下田市</td><td class="n">1,500円</td><td class="n">1,450円</td><td class="n">50円</td></tr>
+  <tr><td>福島県 会津若松市</td><td class="n">1,250円</td><td class="n">1,300円</td><td class="n">50円</td></tr>
+  <tr><td>北海道 上川郡上川町</td><td class="n">1,240円</td><td class="n">1,200円</td><td class="n">40円</td></tr>
+  <tr><td>北海道 登別市</td><td class="n">1,200円</td><td class="n">1,220円</td><td class="n">20円</td></tr>
+  <tr><td>長野県 北安曇郡白馬村</td><td class="n">1,200円</td><td class="n">1,200円</td><td class="n">0円</td></tr>
+  <tr><td>長野県 北佐久郡軽井沢町</td><td class="n">1,400円</td><td class="n">1,400円</td><td class="n">0円</td></tr>
+  <tr><td>沖縄県 石垣市</td><td class="n">1,200円</td><td class="n">1,200円</td><td class="n">0円</td></tr>
+</table>
+</div>
+<p>9件中4件は差がないか20〜50円程度でしたが、上位2件では300〜400円の差がありました。時給400円の差は、月176時間（22日×8時間）の勤務で70,400円にあたります。</p>
+<p class="note">住所が完全に一致する求人だけを対象にしているため、同じ施設でも住所の表記が違えば突き合わせできていません。実際にはこれより多くの重複がある可能性があります。また職種や勤務時間が同一である保証はないため、差の全額が会社による違いとは限りません。</p>
+
+<h2>この調査の限界</h2>
+<p>取得は2026年9月11日時点のもので、求人の状況は日々変わります。募集終了の判定は各社の表記に依存しており、表記が更新されていない求人は募集中として残っている可能性があります。</p>
+<p>対象は3社のみで、リゾートバイトを扱う派遣会社はほかにもあります。会社ごとに求人の出し方が違うため、この集計を業界全体の相場として扱うことはできません。</p>
+
+<footer>
+  <p>調査・作成：resort sort（<a href="/">resort-sort.fumiproject.dev</a>）　連絡先 zax-official@fumiproject.dev</p>
+  <p>当サイトは提携各社のアフィリエイトプログラム（成果報酬型広告）を利用して運営されています。</p>
+</footer>
+
+</main>
+</body>
+</html>
