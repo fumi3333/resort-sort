@@ -237,6 +237,25 @@
   .legal summary{cursor:pointer;font-weight:600;color:var(--ink);font-size:13px}
   .legal p{margin:8px 0;line-height:1.7}
   .note{font-size:12px;color:var(--sub);margin:10px 0 0}
+
+  /* 検索から来た人が最初に見るべきなのは求人であって、空のフォームではない。
+     スマホでは絞り込みを畳み、件数と求人リストを先に出す。
+     PCは横に余裕があるので従来どおり全部開いたまま。 */
+  #filter-toggle{display:none}
+  @media (max-width:720px){
+    main{display:flex;flex-direction:column}
+    #filter-toggle{
+      display:block;order:0;width:100%;margin:0 0 10px;padding:13px 16px;
+      background:var(--card);color:var(--ink);border:1px solid var(--line);
+      border-radius:8px;font-size:15px;font-weight:600;text-align:left;cursor:pointer;
+      font-family:inherit}
+    #filter-toggle[aria-expanded="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+    #filter-panel{display:none;order:1}
+    #filter-panel.open{display:block}
+    .count{order:2}
+    #results{order:3}
+    #site-links{order:4}
+  }
 </style>
 
 </head>
@@ -253,6 +272,8 @@
 </header>
 
 <main>
+  <button type="button" id="filter-toggle" onclick="toggleFilters()" aria-expanded="false" aria-controls="filter-panel">絞り込み・勤務期間を指定する ▾</button>
+  <div id="filter-panel">
   <div class="filters">
     <div>
       <label for="f-region">エリア（地方）</label>
@@ -351,7 +372,9 @@
     </div>
   </div>
 
-  <div style="background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin:12px 0;font-size:12px;color:var(--sub);line-height:2">
+  </div><!-- /#filter-panel -->
+
+  <div id="site-links" style="background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin:12px 0;font-size:12px;color:var(--sub);line-height:2">
     <div>
       <b style="color:var(--ink)">人気条件特化：</b>
       <a href="/feature/short-term/" style="color:var(--ink);font-weight:600">短期・超短期（1週間/1ヶ月）</a> ｜ 
@@ -365,9 +388,14 @@
       <div><a href="/compare/" style="color:var(--ink);font-weight:600">派遣会社データ比較</a> ｜ <a href="/about/" style="color:var(--ink);font-weight:600">サイトについて・規約</a></div>
     </div>
     <div style="margin-top:4px;border-top:1px dashed var(--line);padding-top:4px">
+      <b style="color:var(--ink)">リゾート地別の時給相場：</b><a href="/spot/hakone/" style="color:var(--ink);font-weight:600">箱根</a>（524件） ／ <a href="/spot/atami/" style="color:var(--ink);font-weight:600">熱海</a>（269件） ／ <a href="/spot/miyako/" style="color:var(--ink);font-weight:600">宮古島</a>（258件） ／ <a href="/spot/ishigaki/" style="color:var(--ink);font-weight:600">石垣島</a>（232件） ／ <a href="/spot/karuizawa/" style="color:var(--ink);font-weight:600">軽井沢</a>（200件） ／ <a href="/spot/niseko/" style="color:var(--ink);font-weight:600">ニセコ</a>（196件） ／ <a href="/spot/yuzawa/" style="color:var(--ink);font-weight:600">越後湯沢</a>（195件） ／ <a href="/spot/tomamu/" style="color:var(--ink);font-weight:600">トマム</a>（169件） ／ <a href="/spot/hirugano/" style="color:var(--ink);font-weight:600">ひるがの高原</a>（127件） ／ <a href="/spot/shirakaba/" style="color:var(--ink);font-weight:600">白樺湖</a>（109件） ／ <a href="/spot/kusatsu/" style="color:var(--ink);font-weight:600">草津温泉</a>（108件） ／ <a href="/spot/shigakogen/" style="color:var(--ink);font-weight:600">志賀高原</a>（104件） ／ <a href="/spot/rusutsu/" style="color:var(--ink);font-weight:600">ルスツ</a>（102件） ／ <a href="/spot/noboribetsu/" style="color:var(--ink);font-weight:600">登別</a>（101件） ／ <a href="/spot/hakuba/" style="color:var(--ink);font-weight:600">白馬</a>（88件） ／ <a href="/spot/yufuin/" style="color:var(--ink);font-weight:600">由布院</a>（63件） ／ <a href="/spot/minakami/" style="color:var(--ink);font-weight:600">みなかみ</a>（62件） ／ <a href="/spot/zao/" style="color:var(--ink);font-weight:600">蔵王</a>（60件） ／ <a href="/spot/nozawa/" style="color:var(--ink);font-weight:600">野沢温泉</a>（52件） ／ <a href="/spot/appi/" style="color:var(--ink);font-weight:600">安比高原</a>（36件） ／ <a href="/spot/myoko/" style="color:var(--ink);font-weight:600">妙高</a>（34件） ／ <a href="/spot/kiroro/" style="color:var(--ink);font-weight:600">キロロ</a>（20件）
+    </div>
+    <div style="margin-top:4px;border-top:1px dashed var(--line);padding-top:4px">
       <b style="color:var(--ink)">調べたこと：</b>
       <a href="/article/wage-gap/" style="color:var(--ink);font-weight:600">同じ勤務地なのに時給が400円違った（実測）</a> ｜
-      <a href="/article/how-it-works/" style="color:var(--ink);font-weight:600">求人を4社から集めて横断検索を作るまで</a>
+      <a href="/article/how-it-works/" style="color:var(--ink);font-weight:600">求人を4社から集めて横断検索を作るまで</a> ｜
+      <a href="/ranking/wage/" style="color:var(--ink);font-weight:600">派遣会社5社の平均時給ランキング</a> ｜
+      <a href="/ranking/jobs/" style="color:var(--ink);font-weight:600">職種別の平均時給ランキング</a>
     </div>
   </div>
 
@@ -417,7 +445,7 @@
           <span class="badge">2週間〜6ヶ月</span>
         </td>
         <td>
-          <span class="badge badge-accent">即日可</span>
+          
           <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
           <div class="lic">派13-302871</div>
         </td>
@@ -757,7 +785,7 @@
           <span class="badge">3週間〜6ヶ月以上</span>
         </td>
         <td>
-          <span class="badge badge-accent">即日可</span>
+          
           <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
           <div class="lic">派13-302871</div>
         </td>
@@ -905,6 +933,40 @@
 
       <tr>
         <td>
+          <div style="font-weight:700;font-size:14px">[九州] 福岡県福岡市博多区</div>
+          <div style="font-size:12px;color:var(--sub);margin-top:2px">その他</div>
+        </td>
+        <td>
+          <div class="wage">¥1,900</div>
+          <div style="font-size:11px;color:var(--sub)">時給</div>
+        </td>
+        <td class="">寮なし
+          
+          <div class="raw">寮なし</div>
+        </td>
+        <td>
+          —
+        </td>
+        <td>
+          <span class="badge badge-partner">提携公式</span>
+          <span class="badge">車持込可</span>
+          <span class="badge">送迎あり</span>
+          <span class="badge">Wi-Fi</span>
+          <span class="badge">2ヶ月〜6ヶ月以上</span>
+        </td>
+        <td>
+          
+          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
+          <div class="lic">派13-302871</div>
+        </td>
+        <td>
+          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1006351%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
+          <div class="lic">0時間前更新</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
           <div style="font-weight:700;font-size:14px">[甲信越・北陸] 長野県下高井郡</div>
           <div style="font-size:12px;color:var(--sub);margin-top:2px">調理（資格不要）</div>
         </td>
@@ -961,7 +1023,7 @@
           <span class="badge">3ヶ月〜6ヶ月以上</span>
         </td>
         <td>
-          <span class="badge badge-accent">即日可</span>
+          
           <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
           <div class="lic">派13-302871</div>
         </td>
@@ -1335,12 +1397,46 @@
           <span class="badge">3ヶ月〜6ヶ月以上</span>
         </td>
         <td>
-          <span class="badge badge-accent">即日可</span>
+          
           <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
           <div class="lic">派13-302871</div>
         </td>
         <td>
           <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1002424%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
+          <div class="lic">0時間前更新</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <div style="font-weight:700;font-size:14px">[九州] 福岡県福岡市博多区</div>
+          <div style="font-size:12px;color:var(--sub);margin-top:2px">その他</div>
+        </td>
+        <td>
+          <div class="wage">¥1,710</div>
+          <div style="font-size:11px;color:var(--sub)">時給</div>
+        </td>
+        <td class="">寮なし
+          
+          <div class="raw">寮なし</div>
+        </td>
+        <td>
+          —
+        </td>
+        <td>
+          <span class="badge badge-partner">提携公式</span>
+          <span class="badge">車持込可</span>
+          <span class="badge">送迎あり</span>
+          <span class="badge">Wi-Fi</span>
+          <span class="badge">2ヶ月〜6ヶ月以上</span>
+        </td>
+        <td>
+          
+          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
+          <div class="lic">派13-302871</div>
+        </td>
+        <td>
+          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1006083%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
           <div class="lic">0時間前更新</div>
         </td>
       </tr>
@@ -1471,7 +1567,7 @@
           <span class="badge">2ヶ月〜6ヶ月以上</span>
         </td>
         <td>
-          <span class="badge badge-accent">即日可</span>
+          
           <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
           <div class="lic">派13-302871</div>
         </td>
@@ -1539,7 +1635,7 @@
           <span class="badge">6ヶ月以上</span>
         </td>
         <td>
-          <span class="badge badge-accent">即日可</span>
+          
           <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
           <div class="lic">派13-302871</div>
         </td>
@@ -1641,7 +1737,7 @@
           <span class="badge">3ヶ月〜6ヶ月以上</span>
         </td>
         <td>
-          <span class="badge badge-accent">即日可</span>
+          
           <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
           <div class="lic">派13-302871</div>
         </td>
@@ -1743,7 +1839,7 @@
           <span class="badge">2ヶ月〜6ヶ月以上</span>
         </td>
         <td>
-          <span class="badge badge-accent">即日可</span>
+          
           <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
           <div class="lic">派13-302871</div>
         </td>
@@ -1993,6 +2089,40 @@
 
       <tr>
         <td>
+          <div style="font-weight:700;font-size:14px">[関東] 神奈川県横浜市港北区</div>
+          <div style="font-size:12px;color:var(--sub);margin-top:2px">その他</div>
+        </td>
+        <td>
+          <div class="wage">¥1,650</div>
+          <div style="font-size:11px;color:var(--sub)">時給</div>
+        </td>
+        <td class="">寮なし
+          
+          <div class="raw">寮なし</div>
+        </td>
+        <td>
+          —
+        </td>
+        <td>
+          <span class="badge badge-partner">提携公式</span>
+          <span class="badge">車持込可</span>
+          <span class="badge">送迎あり</span>
+          <span class="badge">Wi-Fi</span>
+          <span class="badge">3ヶ月〜6ヶ月以上</span>
+        </td>
+        <td>
+          
+          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
+          <div class="lic">派13-302871</div>
+        </td>
+        <td>
+          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1001880%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
+          <div class="lic">0時間前更新</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
           <div style="font-weight:700;font-size:14px">[関西] 兵庫県神戸市北区</div>
           <div style="font-size:12px;color:var(--sub);margin-top:2px">仲居・客室係</div>
         </td>
@@ -2015,7 +2145,7 @@
           <span class="badge">3ヶ月〜6ヶ月以上</span>
         </td>
         <td>
-          <span class="badge badge-accent">即日可</span>
+          
           <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
           <div class="lic">派13-302871</div>
         </td>
@@ -2083,7 +2213,7 @@
           <span class="badge">2ヶ月〜6ヶ月以上</span>
         </td>
         <td>
-          <span class="badge badge-accent">即日可</span>
+          
           <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
           <div class="lic">派13-302871</div>
         </td>
@@ -2287,7 +2417,7 @@
           <span class="badge">1ヶ月〜3ヶ月</span>
         </td>
         <td>
-          <span class="badge badge-accent">即日可</span>
+          
           <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
           <div class="lic">派13-302871</div>
         </td>
@@ -2321,7 +2451,7 @@
           <span class="badge">6ヶ月以上</span>
         </td>
         <td>
-          <span class="badge badge-accent">即日可</span>
+          
           <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
           <div class="lic">派13-302871</div>
         </td>
@@ -2435,6 +2565,40 @@
 
       <tr>
         <td>
+          <div style="font-weight:700;font-size:14px">[中国・四国] 鳥取県東伯郡三朝町</div>
+          <div style="font-size:12px;color:var(--sub);margin-top:2px">調理（要資格）</div>
+        </td>
+        <td>
+          <div class="wage">¥1,600</div>
+          <div style="font-size:11px;color:var(--sub)">時給</div>
+        </td>
+        <td class="dorm-full">完全個室
+          
+          <div class="raw">1ルーム個室</div>
+        </td>
+        <td>
+          —
+        </td>
+        <td>
+          <span class="badge badge-partner">提携公式</span>
+          <span class="badge">車持込可</span>
+          <span class="badge">送迎あり</span>
+          <span class="badge">Wi-Fi</span>
+          <span class="badge">2ヶ月〜6ヶ月以上</span>
+        </td>
+        <td>
+          
+          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
+          <div class="lic">派13-302871</div>
+        </td>
+        <td>
+          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1000495%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
+          <div class="lic">0時間前更新</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
           <div style="font-weight:700;font-size:14px">[甲信越・北陸] 長野県北佐久郡</div>
           <div style="font-size:12px;color:var(--sub);margin-top:2px">調理（資格不要）</div>
         </td>
@@ -2469,6 +2633,40 @@
 
       <tr>
         <td>
+          <div style="font-weight:700;font-size:14px">[東海] 愛知県額田郡幸田町</div>
+          <div style="font-size:12px;color:var(--sub);margin-top:2px">調理（資格不要）</div>
+        </td>
+        <td>
+          <div class="wage">¥1,600</div>
+          <div style="font-size:11px;color:var(--sub)">時給</div>
+        </td>
+        <td class="dorm-full">完全個室
+          
+          <div class="raw">1ルーム個室</div>
+        </td>
+        <td>
+          —
+        </td>
+        <td>
+          <span class="badge badge-partner">提携公式</span>
+          <span class="badge">車持込可</span>
+          <span class="badge">送迎あり</span>
+          <span class="badge">Wi-Fi</span>
+          <span class="badge">3ヶ月〜6ヶ月以上</span>
+        </td>
+        <td>
+          
+          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
+          <div class="lic">派13-302871</div>
+        </td>
+        <td>
+          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1000505%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
+          <div class="lic">0時間前更新</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
           <div style="font-weight:700;font-size:14px">[関東] 東京都渋谷区</div>
           <div style="font-size:12px;color:var(--sub);margin-top:2px">レストランサービス</div>
         </td>
@@ -2491,7 +2689,7 @@
           <span class="badge">2ヶ月〜6ヶ月以上</span>
         </td>
         <td>
-          <span class="badge badge-accent">即日可</span>
+          
           <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
           <div class="lic">派13-302871</div>
         </td>
@@ -2661,7 +2859,7 @@
           <span class="badge">2ヶ月〜6ヶ月以上</span>
         </td>
         <td>
-          <span class="badge badge-accent">即日可</span>
+          
           <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
           <div class="lic">派13-302871</div>
         </td>
@@ -2905,6 +3103,74 @@
         </td>
         <td>
           <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1001024%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
+          <div class="lic">0時間前更新</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <div style="font-weight:700;font-size:14px">[関西] 京都府京都市東山区</div>
+          <div style="font-size:12px;color:var(--sub);margin-top:2px">調理（資格不要）</div>
+        </td>
+        <td>
+          <div class="wage">¥1,600</div>
+          <div style="font-size:11px;color:var(--sub)">時給</div>
+        </td>
+        <td class="">寮なし
+          
+          <div class="raw">寮なし</div>
+        </td>
+        <td>
+          —
+        </td>
+        <td>
+          <span class="badge badge-partner">提携公式</span>
+          <span class="badge">車持込可</span>
+          <span class="badge">送迎あり</span>
+          <span class="badge">Wi-Fi</span>
+          <span class="badge">3ヶ月〜6ヶ月以上</span>
+        </td>
+        <td>
+          
+          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
+          <div class="lic">派13-302871</div>
+        </td>
+        <td>
+          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1001028%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
+          <div class="lic">0時間前更新</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <div style="font-weight:700;font-size:14px">[北海道] 北海道利尻郡利尻富士町</div>
+          <div style="font-size:12px;color:var(--sub);margin-top:2px">ナイトスタッフ</div>
+        </td>
+        <td>
+          <div class="wage">¥1,600</div>
+          <div style="font-size:11px;color:var(--sub)">時給</div>
+        </td>
+        <td class="dorm-full">完全個室
+          
+          <div class="raw">個室</div>
+        </td>
+        <td>
+          —
+        </td>
+        <td>
+          <span class="badge badge-partner">提携公式</span>
+          <span class="badge">車持込可</span>
+          <span class="badge">徒歩10分</span>
+          <span class="badge">Wi-Fi</span>
+          <span class="badge">2週間〜1ヶ月</span>
+        </td>
+        <td>
+          
+          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
+          <div class="lic">派13-302871</div>
+        </td>
+        <td>
+          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1001167%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
           <div class="lic">0時間前更新</div>
         </td>
       </tr>
@@ -3273,7 +3539,7 @@
           <span class="badge">3ヶ月〜6ヶ月以上</span>
         </td>
         <td>
-          <span class="badge badge-accent">即日可</span>
+          
           <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
           <div class="lic">派13-302871</div>
         </td>
@@ -3313,6 +3579,108 @@
         </td>
         <td>
           <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1002155%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
+          <div class="lic">0時間前更新</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <div style="font-weight:700;font-size:14px">[関東] 東京都千代田区</div>
+          <div style="font-size:12px;color:var(--sub);margin-top:2px">調理（資格不要）</div>
+        </td>
+        <td>
+          <div class="wage">¥1,600</div>
+          <div style="font-size:11px;color:var(--sub)">時給</div>
+        </td>
+        <td class="">寮なし
+          
+          <div class="raw">寮なし</div>
+        </td>
+        <td>
+          —
+        </td>
+        <td>
+          <span class="badge badge-partner">提携公式</span>
+          <span class="badge">車持込可</span>
+          <span class="badge">送迎あり</span>
+          <span class="badge">Wi-Fi</span>
+          <span class="badge">6ヶ月以上</span>
+        </td>
+        <td>
+          
+          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
+          <div class="lic">派13-302871</div>
+        </td>
+        <td>
+          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1002199%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
+          <div class="lic">0時間前更新</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <div style="font-weight:700;font-size:14px">[関東] 東京都千代田区</div>
+          <div style="font-size:12px;color:var(--sub);margin-top:2px">調理（資格不要）</div>
+        </td>
+        <td>
+          <div class="wage">¥1,600</div>
+          <div style="font-size:11px;color:var(--sub)">時給</div>
+        </td>
+        <td class="">寮なし
+          
+          <div class="raw">寮なし</div>
+        </td>
+        <td>
+          —
+        </td>
+        <td>
+          <span class="badge badge-partner">提携公式</span>
+          <span class="badge">車持込可</span>
+          <span class="badge">送迎あり</span>
+          <span class="badge">Wi-Fi</span>
+          <span class="badge">6ヶ月以上</span>
+        </td>
+        <td>
+          
+          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
+          <div class="lic">派13-302871</div>
+        </td>
+        <td>
+          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1002211%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
+          <div class="lic">0時間前更新</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <div style="font-weight:700;font-size:14px">[甲信越・北陸] 長野県北佐久郡</div>
+          <div style="font-size:12px;color:var(--sub);margin-top:2px">調理（資格不要）</div>
+        </td>
+        <td>
+          <div class="wage">¥1,600</div>
+          <div style="font-size:11px;color:var(--sub)">時給</div>
+        </td>
+        <td class="">寮なし
+          
+          <div class="raw">寮なし</div>
+        </td>
+        <td>
+          —
+        </td>
+        <td>
+          <span class="badge badge-partner">提携公式</span>
+          <span class="badge">車持込可</span>
+          <span class="badge">送迎あり</span>
+          <span class="badge">Wi-Fi</span>
+          <span class="badge">6ヶ月以上</span>
+        </td>
+        <td>
+          
+          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
+          <div class="lic">派13-302871</div>
+        </td>
+        <td>
+          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1002215%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
           <div class="lic">0時間前更新</div>
         </td>
       </tr>
@@ -3449,346 +3817,6 @@
         </td>
         <td>
           <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1002264%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
-          <div class="lic">0時間前更新</div>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <div style="font-weight:700;font-size:14px">[関東] 千葉県浦安市</div>
-          <div style="font-size:12px;color:var(--sub);margin-top:2px">調理（資格不要）</div>
-        </td>
-        <td>
-          <div class="wage">¥1,600</div>
-          <div style="font-size:11px;color:var(--sub)">時給</div>
-        </td>
-        <td class="dorm-full">完全個室
-          
-          <div class="raw">個室</div>
-        </td>
-        <td>
-          <b>1食無料</b>
-        </td>
-        <td>
-          <span class="badge badge-partner">提携公式</span>
-          
-          <span class="badge">徒歩10分</span>
-          <span class="badge">Wi-Fi</span>
-          <span class="badge">2ヶ月〜6ヶ月以上</span>
-        </td>
-        <td>
-          <span class="badge badge-accent">即日可</span>
-          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
-          <div class="lic">派13-302871</div>
-        </td>
-        <td>
-          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1002290%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
-          <div class="lic">0時間前更新</div>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <div style="font-weight:700;font-size:14px">[関西] 兵庫県神戸市北区</div>
-          <div style="font-size:12px;color:var(--sub);margin-top:2px">仲居・客室係</div>
-        </td>
-        <td>
-          <div class="wage">¥1,600</div>
-          <div style="font-size:11px;color:var(--sub)">時給</div>
-        </td>
-        <td class="dorm-full">完全個室
-          
-          <div class="raw">1ルーム個室</div>
-        </td>
-        <td>
-          <b>2食無料</b>
-        </td>
-        <td>
-          <span class="badge badge-partner">提携公式</span>
-          
-          <span class="badge">徒歩15分</span>
-          <span class="badge">Wi-Fi</span>
-          <span class="badge">2ヶ月〜6ヶ月以上</span>
-        </td>
-        <td>
-          
-          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
-          <div class="lic">派13-302871</div>
-        </td>
-        <td>
-          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1002402%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
-          <div class="lic">0時間前更新</div>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <div style="font-weight:700;font-size:14px">[関東] 東京都羽村市</div>
-          <div style="font-size:12px;color:var(--sub);margin-top:2px">その他</div>
-        </td>
-        <td>
-          <div class="wage">¥1,600</div>
-          <div style="font-size:11px;color:var(--sub)">時給</div>
-        </td>
-        <td class="">寮なし
-          
-          <div class="raw">寮なし</div>
-        </td>
-        <td>
-          —
-        </td>
-        <td>
-          <span class="badge badge-partner">提携公式</span>
-          <span class="badge">車持込可</span>
-          <span class="badge">送迎あり</span>
-          <span class="badge">Wi-Fi</span>
-          <span class="badge">3ヶ月〜6ヶ月以上</span>
-        </td>
-        <td>
-          
-          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
-          <div class="lic">派13-302871</div>
-        </td>
-        <td>
-          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1002421%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
-          <div class="lic">0時間前更新</div>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <div style="font-weight:700;font-size:14px">[関東] 東京都中央区</div>
-          <div style="font-size:12px;color:var(--sub);margin-top:2px">フロント</div>
-        </td>
-        <td>
-          <div class="wage">¥1,600</div>
-          <div style="font-size:11px;color:var(--sub)">時給</div>
-        </td>
-        <td class="dorm-full">完全個室
-          
-          <div class="raw">個室</div>
-        </td>
-        <td>
-          <b>1食無料</b>
-        </td>
-        <td>
-          <span class="badge badge-partner">提携公式</span>
-          
-          <span class="badge">徒歩10分</span>
-          <span class="badge">Wi-Fi</span>
-          <span class="badge">1ヶ月〜6ヶ月以上</span>
-        </td>
-        <td>
-          
-          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
-          <div class="lic">派13-302871</div>
-        </td>
-        <td>
-          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1002539%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
-          <div class="lic">0時間前更新</div>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <div style="font-weight:700;font-size:14px">[関東] 群馬県利根郡みなかみ町</div>
-          <div style="font-size:12px;color:var(--sub);margin-top:2px">調理（資格不要）</div>
-        </td>
-        <td>
-          <div class="wage">¥1,600</div>
-          <div style="font-size:11px;color:var(--sub)">時給</div>
-        </td>
-        <td class="dorm-full">完全個室
-          <span class="badge badge-accent">寮費無料</span>
-          <div class="raw">1ルーム個室</div>
-        </td>
-        <td>
-          <b>2食無料</b>
-        </td>
-        <td>
-          <span class="badge badge-partner">提携公式</span>
-          <span class="badge">車持込可</span>
-          <span class="badge">徒歩5分</span>
-          <span class="badge">Wi-Fi</span>
-          <span class="badge">2ヶ月〜6ヶ月以上</span>
-        </td>
-        <td>
-          
-          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
-          <div class="lic">派13-302871</div>
-        </td>
-        <td>
-          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1002552%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
-          <div class="lic">0時間前更新</div>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <div style="font-weight:700;font-size:14px">[関東] 東京都大田区</div>
-          <div style="font-size:12px;color:var(--sub);margin-top:2px">レストランサービス</div>
-        </td>
-        <td>
-          <div class="wage">¥1,600</div>
-          <div style="font-size:11px;color:var(--sub)">時給</div>
-        </td>
-        <td class="">寮なし
-          
-          <div class="raw">寮なし</div>
-        </td>
-        <td>
-          —
-        </td>
-        <td>
-          <span class="badge badge-partner">提携公式</span>
-          <span class="badge">車持込可</span>
-          <span class="badge">徒歩4分</span>
-          <span class="badge">Wi-Fi</span>
-          <span class="badge">2ヶ月〜6ヶ月以上</span>
-        </td>
-        <td>
-          
-          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
-          <div class="lic">派13-302871</div>
-        </td>
-        <td>
-          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1002630%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
-          <div class="lic">0時間前更新</div>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <div style="font-weight:700;font-size:14px">[関東] 東京都中央区</div>
-          <div style="font-size:12px;color:var(--sub);margin-top:2px">バーテンダー</div>
-        </td>
-        <td>
-          <div class="wage">¥1,600</div>
-          <div style="font-size:11px;color:var(--sub)">時給</div>
-        </td>
-        <td class="">寮なし
-          
-          <div class="raw">寮なし</div>
-        </td>
-        <td>
-          <b>1食無料</b>
-        </td>
-        <td>
-          <span class="badge badge-partner">提携公式</span>
-          <span class="badge">車持込可</span>
-          <span class="badge">徒歩2分</span>
-          <span class="badge">Wi-Fi</span>
-          <span class="badge">1ヶ月〜6ヶ月以上</span>
-        </td>
-        <td>
-          
-          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
-          <div class="lic">派13-302871</div>
-        </td>
-        <td>
-          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1002640%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
-          <div class="lic">0時間前更新</div>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <div style="font-weight:700;font-size:14px">[関東] 東京都中央区</div>
-          <div style="font-size:12px;color:var(--sub);margin-top:2px">その他</div>
-        </td>
-        <td>
-          <div class="wage">¥1,600</div>
-          <div style="font-size:11px;color:var(--sub)">時給</div>
-        </td>
-        <td class="dorm-full">完全個室
-          
-          <div class="raw">個室</div>
-        </td>
-        <td>
-          —
-        </td>
-        <td>
-          <span class="badge badge-partner">提携公式</span>
-          <span class="badge">車持込可</span>
-          <span class="badge">送迎あり</span>
-          <span class="badge">Wi-Fi</span>
-          <span class="badge">3ヶ月〜6ヶ月以上</span>
-        </td>
-        <td>
-          
-          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
-          <div class="lic">派13-302871</div>
-        </td>
-        <td>
-          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1002676%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
-          <div class="lic">0時間前更新</div>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <div style="font-weight:700;font-size:14px">[東海] 愛知県名古屋市港区</div>
-          <div style="font-size:12px;color:var(--sub);margin-top:2px">フロント</div>
-        </td>
-        <td>
-          <div class="wage">¥1,600</div>
-          <div style="font-size:11px;color:var(--sub)">時給</div>
-        </td>
-        <td class="">寮なし
-          
-          <div class="raw">寮なし</div>
-        </td>
-        <td>
-          <b>1食無料</b>
-        </td>
-        <td>
-          <span class="badge badge-partner">提携公式</span>
-          <span class="badge">車持込可</span>
-          <span class="badge">送迎あり</span>
-          <span class="badge">Wi-Fi</span>
-          <span class="badge">3ヶ月〜6ヶ月以上</span>
-        </td>
-        <td>
-          
-          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
-          <div class="lic">派13-302871</div>
-        </td>
-        <td>
-          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1002775%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
-          <div class="lic">0時間前更新</div>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <div style="font-weight:700;font-size:14px">[関東] 東京都港区</div>
-          <div style="font-size:12px;color:var(--sub);margin-top:2px">フロント</div>
-        </td>
-        <td>
-          <div class="wage">¥1,600</div>
-          <div style="font-size:11px;color:var(--sub)">時給</div>
-        </td>
-        <td class="">寮なし
-          
-          <div class="raw">寮なし</div>
-        </td>
-        <td>
-          <b>1食無料</b>
-        </td>
-        <td>
-          <span class="badge badge-partner">提携公式</span>
-          <span class="badge">車持込可</span>
-          <span class="badge">送迎あり</span>
-          <span class="badge">Wi-Fi</span>
-          <span class="badge">2ヶ月〜6ヶ月以上</span>
-        </td>
-        <td>
-          
-          <div class="lic">グッドマンサービス（リゾートバイト.com）</div>
-          <div class="lic">派13-302871</div>
-        </td>
-        <td>
-          <a class="cta" href="https://px.a8.net/svt/ejp?a8mat=4BC7V7+5QLFOY+3OHQ+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.resortbaito.com%2F1003168%2F" target="_blank" rel="noopener nofollow sponsored">空き確認・応募（公式）</a>
           <div class="lic">0時間前更新</div>
         </td>
       </tr>
@@ -4093,6 +4121,32 @@ function passes(j){
   return true;
 }
 
+function toggleFilters(){
+  const p = document.getElementById("filter-panel");
+  const b = document.getElementById("filter-toggle");
+  const open = p.classList.toggle("open");
+  b.setAttribute("aria-expanded", open ? "true" : "false");
+  if (!open) updateToggleLabel();
+  else b.textContent = "絞り込みを閉じる ▴";
+}
+
+// 畳んだ状態でも、いま何件絞り込んでいるかが分かるようにする
+function updateToggleLabel(){
+  const b = document.getElementById("filter-toggle");
+  if (!b || b.getAttribute("aria-expanded") === "true") return;
+  let n = 0;
+  // 「指定なし」を表す値はセレクトごとに違う（時給の下限だけ "0" が既定）。
+  // 素朴に truthy で数えると、何も絞っていないのに「絞り込み中」と出る。
+  ["f-region","f-dorm","f-wage","f-meals","f-q","f-start-date","f-end-date","f-term-select"]
+    .forEach(id => {
+      const e = document.getElementById(id);
+      if (e && e.value && e.value !== "0") n++;
+    });
+  document.querySelectorAll(".checks input[type=checkbox]").forEach(c => { if (c.checked) n++; });
+  b.textContent = n ? `絞り込み中（${n}件の条件）／変更する ▾`
+                    : "絞り込み・勤務期間を指定する ▾";
+}
+
 function render(){
   const matched = JOBS.filter(passes);
   const unknown = matched.filter(j => j._periodUnknown).length;
@@ -4103,6 +4157,7 @@ function render(){
     // 「判定できた分」と混ぜて多く見せない。
     el0.textContent += `（うち ${unknown.toLocaleString()} 件は期間の記載がなく判定不可）`;
   }
+  updateToggleLabel();
 
   const el = document.getElementById("results");
   if (!matched.length) {
