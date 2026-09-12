@@ -4160,7 +4160,11 @@ function passes(j){
   if (meals && (j.meals_per_day || 0) < +meals) return false;
 
   if (q) {
-    const hay = [j.workplace_name, j.prefecture, j.city, j.job_category, j.dorm_type_raw, j.period_raw].filter(Boolean).join(" ").toLowerCase();
+    // search_tags は地名の別名（ルスツ→留寿都、トマム→占冠 等）。
+    // 求人データ側は市区町村名しか持たないので、これが無いと観光地名で検索しても出ない。
+    const hay = [j.workplace_name, j.prefecture, j.city, j.job_category, j.dorm_type_raw,
+                 j.period_raw, j.agency, (j.search_tags || []).join(" ")]
+                .filter(Boolean).join(" ").toLowerCase();
     if (!q.split(/\s+/).every(w => hay.includes(w))) return false;
   }
 
