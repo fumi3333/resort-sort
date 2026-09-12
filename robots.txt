@@ -3,3 +3,4 @@ Allow: /
 
 Sitemap: https://resort-sort.fumiproject.dev/sitemap.xml
 Sitemap: https://resort-sort.fumiproject.dev/sitemap-spots.xml
+Sitemap: https://resort-sort.fumiproject.dev/sitemap-articles.xml
