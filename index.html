@@ -4340,7 +4340,7 @@ function getJobMinMonths(j){
 // 個人を識別する情報は送らない。セッションIDはタブを閉じるまでの乱数で、
 // 訪問者を跨いで追跡するためのものではなく、1回の検索の試行錯誤を
 // ひとまとまりとして数えるためだけに使う。
-const LOG_ENDPOINT = "";
+const LOG_ENDPOINT = "https://resort-demand.hrf-mtd.workers.dev";
 const SID = (() => {
   try {
     let s = sessionStorage.getItem("rs_sid");
