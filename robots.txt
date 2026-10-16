@@ -6,9 +6,11 @@ Sitemap: https://fumiproject.dev/resort/sitemap-spots.xml
 # LLM & AI Agent Documentation
 # https://fumiproject.dev/resort/llms.txt
 Sitemap: https://fumiproject.dev/resort/sitemap-articles.xml
+Sitemap: https://fumiproject.dev/resort/sitemap-jobs.xml
 Sitemap: https://fumiproject.dev/resort/sitemap-area-features.xml
 Sitemap: https://fumiproject.dev/resort/sitemap-worry.xml
 Sitemap: https://fumiproject.dev/resort/sitemap-diary.xml
+Sitemap: https://fumiproject.dev/resort/sitemap-furusato.xml
 Sitemap: https://fumiproject.dev/resort/sitemap-age.xml
 Sitemap: https://fumiproject.dev/resort/sitemap-start.xml
 Sitemap: https://fumiproject.dev/resort/sitemap-job.xml
