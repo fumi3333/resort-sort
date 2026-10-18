@@ -441,31 +441,37 @@
     <!-- 1. 動画セクション -->
     <div class="section-card">
       <div class="tab-bar">
-        <button class="tab-btn active" id="tab-overview" onclick="switchMainTab('overview')">
-         【約60秒】朝の仕入れ業務フロー実演（解説音声つき）
+        <button class="tab-btn active" id="tab-chart-ja" onclick="switchMainTab('chart-ja')">
+          【約55秒】一次足切り短縮・巡回証明（図解ナレーション）
+        </button>
+        <button class="tab-btn" id="tab-global-en" onclick="switchMainTab('global-en')">
+          【約40秒】Global English Demo (AI Data Center / Storage)
+        </button>
+        <button class="tab-btn" id="tab-overview" onclick="switchMainTab('overview')">
+          【約60秒】朝の仕入れ業務実演（ずんだもん音声）
         </button>
         <button class="tab-btn" id="tab-screen" onclick="switchMainTab('screen')">
-         【約30秒】実際の画面操作キャプチャ（無音）
+          【約30秒】画面操作キャプチャ（無音）
         </button>
       </div>
 
       <div class="sub-selector" id="screen-sub-selector" style="display: none;">
         <span class="sub-selector-label">業種別ユースケース:</span>
-        <button class="pill-btn active" id="pill-resort" onclick="switchType('resort')"> 宿泊・グランピング・廃校</button>
-        <button class="pill-btn" id="pill-energy" onclick="switchType('energy')"> 太陽光・インフラ（1万㎡超・随時）</button>
-        <button class="pill-btn" id="pill-logistics" onclick="switchType('logistics')"> 物流・産業用地（準工業・平坦）</button>
+        <button class="pill-btn active" id="pill-resort" onclick="switchType('resort')">宿泊・グランピング・廃校</button>
+        <button class="pill-btn" id="pill-energy" onclick="switchType('energy')">太陽光・インフラ（1万㎡超・随時）</button>
+        <button class="pill-btn" id="pill-logistics" onclick="switchType('logistics')">物流・産業用地（準工業・平坦）</button>
       </div>
 
       <div class="video-card">
         <video id="demo-video" controls playsinline preload="metadata">
-          <source id="video-source" src="demo_zundamon.mp4" type="video/mp4">
+          <source id="video-source" src="demo_mvp_chart_ja.mp4" type="video/mp4">
           お使いのブラウザは動画再生に対応していません。
         </video>
         <div class="controls-overlay" id="status-pill">準備完了</div>
       </div>
 
       <div class="video-desc" id="video-desc-text">
-        <strong>【朝の仕入れ業務フロー実演】</strong> 朝の新着アラート確認から、土地面積・用途地域での10秒絞り込み、社内提出用週次CSV出力までの一連の業務の流れを約60秒でご確認いただけます。
+        <strong>【一次足切り短縮・巡回証明】</strong> 手作業215分から2分への足切り短縮と、全国1,959自治体中1,885サイトの毎日巡回実績をグラフで可視化して解説します。
       </div>
     </div>
 
@@ -615,7 +621,7 @@
     const descText = document.getElementById('video-desc-text');
     const subSelector = document.getElementById('screen-sub-selector');
 
-    let currentTab = 'overview';
+    let currentTab = initialTab === 'overview' ? 'chart-ja' : initialTab;
     let currentType = initialType;
     let maxWatchedSec = 0;
     let pauseEvents = [];
@@ -623,6 +629,8 @@
     let sessionStart = Date.now();
 
     const DESCRIPTIONS = {
+      'chart-ja': '<strong>【一次足切り短縮・巡回証明】</strong> 手作業215分から2分への足切り短縮と、全国1,959自治体中1,885サイトの毎日巡回実績をグラフで可視化して解説します。',
+      'global-en': '<strong>【Global English Demo】</strong> Automated daily scanning across 1,959 municipal portals in Japan. Instant screening for AI data centers, battery storage, and resort developments.',
       overview: '<strong>【朝の仕入れ業務フロー実演】</strong> 朝の新着アラート確認から、土地面積・用途地域での10秒絞り込み、社内提出用週次CSV出力までの一連の業務の流れを約60秒でご確認いただけます。',
       resort: '<strong>【宿泊・グランピング・廃校向け実演】</strong> 敷地3,000㎡以上・用途非線引き・サウンディング対話ありの学校跡地を一瞬で絞り込み、社内検討用リストを出力するデモです。',
       energy: '<strong>【太陽光・インフラ向け実演】</strong> 敷地10,000㎡以上・随時売却（即購入・先着順）の平坦公有地をピンポイントで絞り込むデモです。',
@@ -660,16 +668,26 @@
     }
 
     function switchMainTab(tab) {
-      if (currentTab === tab) return;
+      if (currentTab === tab && video.src) return;
       currentTab = tab;
       maxWatchedSec = 0;
       pauseEvents = [];
       seekEvents = [];
 
-      document.getElementById('tab-overview').classList.toggle('active', tab === 'overview');
-      document.getElementById('tab-screen').classList.toggle('active', tab === 'screen');
+      ['chart-ja', 'global-en', 'overview', 'screen'].forEach(t => {
+        const el = document.getElementById(`tab-${t}`);
+        if (el) el.classList.toggle('active', tab === t);
+      });
 
-      if (tab === 'overview') {
+      if (tab === 'chart-ja') {
+        subSelector.style.display = 'none';
+        video.src = 'demo_mvp_chart_ja.mp4';
+        descText.innerHTML = DESCRIPTIONS['chart-ja'];
+      } else if (tab === 'global-en') {
+        subSelector.style.display = 'none';
+        video.src = 'demo_global_en.mp4';
+        descText.innerHTML = DESCRIPTIONS['global-en'];
+      } else if (tab === 'overview') {
         subSelector.style.display = 'none';
         video.src = 'demo_zundamon.mp4';
         descText.innerHTML = DESCRIPTIONS.overview;
@@ -793,7 +811,7 @@
           <td>${escapeHtml(it.youto)}</td>
           <td>${escapeHtml(it.price)}</td>
           <td><span class="status-tag ${it.tag_cls}">${escapeHtml(it.deadline)}</span></td>
-          <td><a href="${escapeHtml(it.url)}" target="_blank" class="link-btn">公募情報 ↗</a></td>
+          <td><a href="${escapeHtml(it.url)}" target="_blank" class="link-btn">公式公募ページ</a></td>
         `;
         tbody.appendChild(tr);
       });

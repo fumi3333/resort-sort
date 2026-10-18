@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>作成済み動画・GIF一覧ギャラリー</title>
+  <title>作成済み動画・デモ一覧ギャラリー</title>
   <style>
     :root {
       --gov-blue: #003e92;
@@ -100,22 +100,36 @@
       font-weight: 700;
       width: fit-content;
     }
-    .badge-audio { background: var(--gov-blue-light); color: var(--gov-blue); border: 1px solid #b3cdf2; }
-    .badge-silent { background: #f1f3f4; color: #5f6368; border: 1px solid #dadce0; }
-    .badge-gif { background: #e6f4ea; color: #137333; border: 1px solid #ceead6; }
+    .badge-audio {
+      background: #e8f0fa;
+      color: var(--gov-blue);
+      border: 1px solid #b3cdf2;
+    }
+    .badge-silent {
+      background: #f0f0f0;
+      color: #555555;
+      border: 1px solid #cccccc;
+    }
+    .badge-gif {
+      background: #e6f4ea;
+      color: var(--gov-accent);
+      border: 1px solid #ceead6;
+    }
     .desc {
       font-size: 13px;
       color: var(--gov-text-muted);
-      line-height: 1.6;
+      line-height: 1.5;
+      flex: 1;
     }
     .meta {
-      font-size: 12px;
-      color: var(--gov-text-muted);
-      margin-top: auto;
-      padding-top: 10px;
-      border-top: 1px solid var(--gov-border-light);
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--gov-text-muted);
+      border-top: 1px solid var(--gov-border-light);
+      padding-top: 10px;
+      margin-top: 4px;
     }
     .file-link {
       color: var(--gov-blue);
@@ -129,31 +143,73 @@
 
   <div class="container">
     <header>
-      <h1> 作成済み動画・GIFアニメ 全一覧ギャラリー</h1>
-      <p class="sub">現在ローカルに配備されている全5本の動画（MP4）および4本のメール用GIFアニメを一括再生できます。</p>
+      <h1>作成済み動画・デモ一覧ギャラリー</h1>
+      <p class="sub">最新のグラフ組み込み解説動画、海外向け英語動画、実機操作動画、メール用GIFアニメを一括再生・確認できます。</p>
     </header>
 
-    <!-- 1. メイン実演解説動画（音声あり） -->
+    <!-- 1. 新方針対応・グラフ解説動画（音声あり） -->
     <section>
       <div class="section-title">
-        <span> メイン実演解説動画（ずんだもん音声つき）</span>
+        <span>新方針対応・グラフ図解解説動画（ナレーション付き）</span>
       </div>
-      <div class="card" style="max-width: 800px;">
-        <div class="media-box">
-          <video controls playsinline preload="metadata">
-            <source src="demo_zundamon.mp4" type="video/mp4">
-          </video>
+      <div class="grid">
+        <!-- 日本語 グラフ図解版 -->
+        <div class="card">
+          <div class="media-box">
+            <video controls playsinline preload="metadata">
+              <source src="demo_mvp_chart_ja.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="info">
+            <span class="badge badge-audio">日本語音声（Haruka・約58秒）</span>
+            <h3>【最新版】一次足切り短縮・巡回証明（グラフ図解）</h3>
+            <p class="desc">
+              全国1,959自治体中1,885サイトの毎日巡回実績（円グラフ）と、手作業215分から2分への足切り短縮（棒グラフ）を提示。自治体公式PDFへの直行と客観的実証データを解説します。
+            </p>
+            <div class="meta">
+              <span>demo_mvp_chart_ja.mp4 (1.04MB)</span>
+              <a href="demo_mvp_chart_ja.mp4" download class="file-link">ダウンロード</a>
+            </div>
+          </div>
         </div>
-        <div class="info">
-          <span class="badge badge-audio">音声あり（解説付き・約56秒）</span>
-          <h3>【業務実演】全国公有地・廃校データベース 朝の仕入れ業務フロー</h3>
-          <p class="desc">
-            上部に実際の画面操作（長野県選択・5000㎡入力・非線引き選択・CSV出力）、下部に視認性抜群の特大テロップを配置。<br>
-            「朝新着が届く → 10秒で絞り込み → 週次CSV出力」の一連のフローを1分で理解できる商談・デモ用メイン動画です。
-          </p>
-          <div class="meta">
-            <span>ファイル: demo_zundamon.mp4 (1.28MB)</span>
-            <a href="demo_zundamon.mp4" download class="file-link">ダウンロード ↗</a>
+
+        <!-- 海外版 英語 -->
+        <div class="card">
+          <div class="media-box">
+            <video controls playsinline preload="metadata">
+              <source src="demo_global_en.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="info">
+            <span class="badge badge-audio">英語音声（Zira・約40秒）</span>
+            <h3>【海外版】Automated Public Land Screening for Global Investors</h3>
+            <p class="desc">
+              AIデータセンター、系統用蓄電池、物流、リゾート開発の海外投資ファンド・開発企業向け。全国1,959自治体巡回と一次足切り短縮を英語ナレーションとグラフで訴求。
+            </p>
+            <div class="meta">
+              <span>demo_global_en.mp4 (0.72MB)</span>
+              <a href="demo_global_en.mp4" download class="file-link">ダウンロード</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ずんだもん版 -->
+        <div class="card">
+          <div class="media-box">
+            <video controls playsinline preload="metadata">
+              <source src="demo_zundamon.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="info">
+            <span class="badge badge-audio">ずんだもん音声（約56秒）</span>
+            <h3>【初期実演版】全国公有地・廃校データベース 朝の仕入れ業務フロー</h3>
+            <p class="desc">
+              画面操作と落ち着いた敬語のずんだもん音声による、朝の新着アラートから10秒絞り込み、CSV出力までの業務実演動画。
+            </p>
+            <div class="meta">
+              <span>demo_zundamon.mp4 (1.28MB)</span>
+              <a href="demo_zundamon.mp4" download class="file-link">ダウンロード</a>
+            </div>
           </div>
         </div>
       </div>
@@ -162,7 +218,7 @@
     <!-- 2. 業種別 実機操作キャプチャ動画（無音・30秒） -->
     <section>
       <div class="section-title">
-        <span> 業種別 実機操作キャプチャ動画（30秒・無音・Webプレイヤー用）</span>
+        <span>業種別 実機操作キャプチャ動画（30秒・無音）</span>
       </div>
       <div class="grid">
         <!-- リゾート -->
@@ -173,12 +229,12 @@
             </video>
           </div>
           <div class="info">
-            <span class="badge badge-silent">無音（実機操作キャプチャ・約30秒）</span>
-            <h3> 宿泊・グランピング・廃校向け</h3>
+            <span class="badge badge-silent">無音（操作キャプチャ・約30秒）</span>
+            <h3>宿泊・グランピング・廃校向け</h3>
             <p class="desc">長野県 / 5,000㎡以上 / 用途非線引の条件で旧七二会中学校跡地（14,250㎡）を一瞬で抽出し、CSV出力する実演。</p>
             <div class="meta">
               <span>screencast_resort.mp4 (0.11MB)</span>
-              <a href="screencast_resort.mp4" download class="file-link">ダウンロード ↗</a>
+              <a href="screencast_resort.mp4" download class="file-link">ダウンロード</a>
             </div>
           </div>
         </div>
@@ -191,12 +247,12 @@
             </video>
           </div>
           <div class="info">
-            <span class="badge badge-silent">無音（実機操作キャプチャ・約30秒）</span>
-            <h3> 太陽光・蓄電池・インフラ向け</h3>
+            <span class="badge badge-silent">無音（操作キャプチャ・約30秒）</span>
+            <h3>太陽光・蓄電池・インフラ向け</h3>
             <p class="desc">全国 / 10,000㎡以上 / 随時売却（即購入可能・先着順）の平坦公有地を一瞬で抽出する実演。</p>
             <div class="meta">
               <span>screencast_energy.mp4 (0.12MB)</span>
-              <a href="screencast_energy.mp4" download class="file-link">ダウンロード ↗</a>
+              <a href="screencast_energy.mp4" download class="file-link">ダウンロード</a>
             </div>
           </div>
         </div>
@@ -209,30 +265,12 @@
             </video>
           </div>
           <div class="info">
-            <span class="badge badge-silent">無音（実機操作キャプチャ・約30秒）</span>
-            <h3> 物流・倉庫・産業用地向け</h3>
+            <span class="badge badge-silent">無音（操作キャプチャ・約30秒）</span>
+            <h3>物流・倉庫・産業用地向け</h3>
             <p class="desc">全国 / 5,000㎡以上 / 準工業地域の産業用地・幹線道路沿い物件を一瞬で抽出しCSV出力する実演。</p>
             <div class="meta">
               <span>screencast_logistics.mp4 (0.14MB)</span>
-              <a href="screencast_logistics.mp4" download class="file-link">ダウンロード ↗</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 汎用 -->
-        <div class="card">
-          <div class="media-box">
-            <video controls playsinline preload="metadata">
-              <source src="screencast.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="info">
-            <span class="badge badge-silent">無音（汎用操作キャプチャ・約30秒）</span>
-            <h3> 汎用画面操作デモ</h3>
-            <p class="desc">エリア選択・面積入力・用途地域絞り込み・CSVダウンロードの基本操作をそのまま収録した動画。</p>
-            <div class="meta">
-              <span>screencast.mp4 (0.11MB)</span>
-              <a href="screencast.mp4" download class="file-link">ダウンロード ↗</a>
+              <a href="screencast_logistics.mp4" download class="file-link">ダウンロード</a>
             </div>
           </div>
         </div>
@@ -242,69 +280,50 @@
     <!-- 3. メール本文埋め込み用 GIFアニメ（約60KB） -->
     <section>
       <div class="section-title">
-        <span> メール本文埋め込み用 動く軽量GIFアニメ（約60KB・自動ループ）</span>
+        <span>メール本文埋め込み用 軽量GIFアニメ（約60KB・自動ループ）</span>
       </div>
       <div class="grid">
-        <!-- リゾートGIF -->
         <div class="card">
           <div class="media-box">
             <img src="screencast_resort.gif" alt="宿泊向けGIF">
           </div>
           <div class="info">
-            <span class="badge badge-gif">GIFアニメ（64KB・自動再生）</span>
+            <span class="badge badge-gif">GIFアニメ（64KB）</span>
             <h3>宿泊・グランピング営業メール用</h3>
             <p class="desc">メール本文に直接貼ることで、受信者がメールを開いた瞬間に操作が目に飛び込んできます。</p>
             <div class="meta">
               <span>screencast_resort.gif (64KB)</span>
-              <a href="screencast_resort.gif" download class="file-link">保存 ↗</a>
+              <a href="screencast_resort.gif" download class="file-link">保存</a>
             </div>
           </div>
         </div>
 
-        <!-- 太陽光GIF -->
         <div class="card">
           <div class="media-box">
             <img src="screencast_energy.gif" alt="太陽光向けGIF">
           </div>
           <div class="info">
-            <span class="badge badge-gif">GIFアニメ（67KB・自動再生）</span>
+            <span class="badge badge-gif">GIFアニメ（67KB）</span>
             <h3>太陽光・インフラ営業メール用</h3>
             <p class="desc">1万㎡超の随時売却物件を絞り込む様子がループ再生されます。</p>
             <div class="meta">
               <span>screencast_energy.gif (67KB)</span>
-              <a href="screencast_energy.gif" download class="file-link">保存 ↗</a>
+              <a href="screencast_energy.gif" download class="file-link">保存</a>
             </div>
           </div>
         </div>
 
-        <!-- 物流GIF -->
         <div class="card">
           <div class="media-box">
             <img src="screencast_logistics.gif" alt="物流向けGIF">
           </div>
           <div class="info">
-            <span class="badge badge-gif">GIFアニメ（76KB・自動再生）</span>
+            <span class="badge badge-gif">GIFアニメ（76KB）</span>
             <h3>物流・倉庫営業メール用</h3>
             <p class="desc">準工業地域の産業用地を抽出する様子がループ再生されます。</p>
             <div class="meta">
               <span>screencast_logistics.gif (76KB)</span>
-              <a href="screencast_logistics.gif" download class="file-link">保存 ↗</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 汎用GIF -->
-        <div class="card">
-          <div class="media-box">
-            <img src="screencast_preview.gif" alt="汎用GIF">
-          </div>
-          <div class="info">
-            <span class="badge badge-gif">GIFアニメ（72KB・自動再生）</span>
-            <h3>汎用営業メール用</h3>
-            <p class="desc">あらゆる業界向けに使える標準的な検索・CSV操作ループGIFです。</p>
-            <div class="meta">
-              <span>screencast_preview.gif (72KB)</span>
-              <a href="screencast_preview.gif" download class="file-link">保存 ↗</a>
+              <a href="screencast_logistics.gif" download class="file-link">保存</a>
             </div>
           </div>
         </div>
