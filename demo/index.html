@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>公有地・廃校データベース デモ動画</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+    }
+    .container {
+      width: 100%;
+      max-width: 840px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    header {
+      text-align: center;
+      padding: 12px 0;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 24px;
+      line-height: 1.4;
+      font-weight: 700;
+    }
+    .recipient-text {
+      color: var(--primary);
+    }
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-top: 6px;
+    }
+    .video-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+      border: 1px solid #334155;
+      position: relative;
+    }
+    video {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: #000;
+    }
+    .controls-overlay {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: var(--text-muted);
+      pointer-events: none;
+      backdrop-filter: blur(4px);
+    }
+    .cta-box {
+      background: var(--card-bg);
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .cta-box h2 {
+      font-size: 18px;
+    }
+    .cta-box p {
+      color: var(--text-muted);
+      font-size: 14px;
+      max-width: 500px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #0f172a;
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+    .btn-secondary {
+      background: #334155;
+      color: var(--text);
+    }
+    .btn-secondary:hover {
+      background: #475569;
+    }
+    .stats-footer {
+      text-align: center;
+      color: #64748b;
+      font-size: 12px;
+      padding: 16px 0;
+    }
+    /* スマホ対応 */
+    @media (max-width: 640px) {
+      h1 { font-size: 20px; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="badge">仕入れ・開発ご担当者様向け限定デモ</div>
+      <h1 id="page-title"><span id="recipient-name" class="recipient-text">ご担当者</span> 様 専用 操作デモ動画</h1>
+      <p class="subtitle">全国3,800件超の公有地・廃校・売却物件の横断検索ツール（約60秒）</p>
+    </header>
+
+    <div class="video-card">
+      <video id="demo-video" controls playsinline preload="metadata">
+        <source src="demo_zundamon.mp4" type="video/mp4">
+        お使いのブラウザは動画再生に対応していません。
+      </video>
+      <div class="controls-overlay" id="status-pill">準備完了</div>
+    </div>
+
+    <div class="cta-box">
+      <h2>このデータベースを2週間無料でお試しいただけます</h2>
+      <p>全国47都道府県・700自治体の公有地・廃校データを、希望の条件（敷地面積・用途地域・ハザード等）で検索・CSV出力できます。</p>
+      <div class="btn-group">
+        <!--email_off--><a href="mailto:s2527084@stu.musashino-u.ac.jp?subject=無料トライアルアカウント発行希望" class="btn btn-primary" id="btn-trial">
+          2週間無料トライアルを申し込む
+        </a><!--/email_off-->
+        <!--email_off--><a href="mailto:s2527084@stu.musashino-u.ac.jp?subject=公有地データベースについての問い合わせ" class="btn btn-secondary">
+          詳しい資料をメールで請求
+        </a><!--/email_off-->
+      </div>
+    </div>
+
+    <div class="stats-footer">
+      ZAX 公有地・跡地開発インテリジェンス / 個人事業主 松田晴史
+    </div>
+  </div>
+
+  <script>
+    // URLパラメータから企業名・担当者名・追跡IDを取得
+    const params = new URLSearchParams(window.location.search);
+    const to = params.get('to') || 'unknown';
+    const name = params.get('name') || '';
+    if (name) {
+      document.getElementById('recipient-name').textContent = name;
+      document.getElementById('page-title').innerHTML = `<span class="recipient-text">${escapeHtml(name)}</span> 様 専用 操作デモ動画`;
+    }
+
+    // 追跡ログ送信エンドポイント（Cloudflare Worker またはログ収集API）
+    const TRACKING_ENDPOINT = 'https://resort-demand.hrf-mtd.workers.dev/video-log';
+
+    const video = document.getElementById('demo-video');
+    const statusPill = document.getElementById('status-pill');
+
+    let maxWatchedSec = 0;
+    let pauseEvents = [];
+    let seekEvents = [];
+    let sessionStart = Date.now();
+
+    function sendLog(eventType, extra = {}) {
+      const payload = {
+        recipient_id: to,
+        recipient_name: name,
+        event: eventType,
+        timestamp: new Date().toISOString(),
+        current_time: Math.round(video.currentTime * 10) / 10,
+        duration: Math.round(video.duration || 0),
+        max_watched_sec: Math.round(maxWatchedSec * 10) / 10,
+        url: window.location.href,
+        user_agent: navigator.userAgent,
+        ...extra
+      };
+
+      console.log('[Tracking Log]', eventType, payload);
+
+      // Beacon API または Fetch で非同期送信
+      try {
+        const dataStr = JSON.stringify(payload);
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon(TRACKING_ENDPOINT, dataStr);
+        } else {
+          fetch(TRACKING_ENDPOINT, { method: 'POST', body: dataStr, keepalive: true, headers: { 'Content-Type': 'application/json' } });
+        }
+      } catch (err) {
+        console.warn('Logging error:', err);
+      }
+    }
+
+    // 1. 初回再生開始
+    let hasStarted = false;
+    video.addEventListener('play', () => {
+      statusPill.textContent = '再生中';
+      if (!hasStarted) {
+        hasStarted = true;
+        sendLog('video_start');
+      } else {
+        sendLog('video_resume');
+      }
+    });
+
+    // 2. 再生進行と最大視聴秒数の追跡
+    video.addEventListener('timeupdate', () => {
+      if (video.currentTime > maxWatchedSec) {
+        maxWatchedSec = video.currentTime;
+      }
+    });
+
+    // 3. 一時停止（どこに注目したかの重要指標）
+    video.addEventListener('pause', () => {
+      if (!video.ended) {
+        statusPill.textContent = '一時停止';
+        const pauseSec = Math.round(video.currentTime * 10) / 10;
+        pauseEvents.push(pauseSec);
+        sendLog('video_pause', { pause_at_sec: pauseSec });
+      }
+    });
+
+    // 4. シーク（巻き戻し・早送り）
+    let lastSeekTime = 0;
+    video.addEventListener('seeking', () => {
+      lastSeekTime = video.currentTime;
+    });
+    video.addEventListener('seeked', () => {
+      const toSec = Math.round(video.currentTime * 10) / 10;
+      seekEvents.push(toSec);
+      sendLog('video_seek', { seek_to_sec: toSec });
+    });
+
+    // 5. 視聴完了
+    video.addEventListener('ended', () => {
+      statusPill.textContent = '視聴完了';
+      sendLog('video_complete', {
+        total_pauses: pauseEvents.length,
+        total_seeks: seekEvents.length
+      });
+    });
+
+    // 6. 離脱時（タブを閉じた・別ページへ移動）の最終送信
+    window.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        sendLog('session_leave', {
+          watch_ratio: video.duration ? (maxWatchedSec / video.duration).toFixed(2) : 0,
+          session_duration_sec: Math.round((Date.now() - sessionStart) / 1000)
+        });
+      }
+    });
+
+    // CTAボタンクリック計測
+    document.getElementById('btn-trial').addEventListener('click', () => {
+      sendLog('cta_trial_click');
+    });
+
+    function escapeHtml(str) {
+      return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+    }
+  </script>
+</body>
+</html>
