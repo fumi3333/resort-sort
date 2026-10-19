@@ -875,15 +875,13 @@
       document.getElementById('csv-modal').classList.remove('active');
     }
 
-    // 初期化とタイプ連動
-    if (initialType) {
-      switchType(initialType);
-    } else {
-      renderTable(allData);
-    }
-
+    // 初期化
+    renderTable(allData);
     if (initialTab === 'screen') {
       switchMainTab('screen');
+      switchType(initialType);
+    } else {
+      switchMainTab(currentTab);
     }
 
     // 動画追跡イベント
