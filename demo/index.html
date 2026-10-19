@@ -441,14 +441,14 @@
     <!-- 1. 動画セクション -->
     <div class="section-card">
       <div class="tab-bar">
-        <button class="tab-btn active" id="tab-chart-ja" onclick="switchMainTab('chart-ja')">
-          【約55秒】一次足切り短縮・巡回証明（図解ナレーション）
+        <button class="tab-btn active" id="tab-usage-ja" onclick="switchMainTab('usage-ja')">
+          【約50秒】3ステップの使い方（新着・絞り込み・公式PDF直行）
         </button>
-        <button class="tab-btn" id="tab-global-en" onclick="switchMainTab('global-en')">
-          【約40秒】Global English Demo (AI Data Center / Storage)
+        <button class="tab-btn" id="tab-usage-en" onclick="switchMainTab('usage-en')">
+          【約40秒】How It Works (Global English Demo)
         </button>
-        <button class="tab-btn" id="tab-overview" onclick="switchMainTab('overview')">
-          【約60秒】朝の仕入れ業務実演（ずんだもん音声）
+        <button class="tab-btn" id="tab-chart-ja" onclick="switchMainTab('chart-ja')">
+          【約55秒】客観データ図解版（巡回証明・足切り短縮）
         </button>
         <button class="tab-btn" id="tab-screen" onclick="switchMainTab('screen')">
           【約30秒】画面操作キャプチャ（無音）
@@ -464,14 +464,14 @@
 
       <div class="video-card">
         <video id="demo-video" controls playsinline preload="metadata">
-          <source id="video-source" src="demo_mvp_chart_ja.mp4" type="video/mp4">
+          <source id="video-source" src="demo_usage_ja.mp4" type="video/mp4">
           お使いのブラウザは動画再生に対応していません。
         </video>
         <div class="controls-overlay" id="status-pill">準備完了</div>
       </div>
 
       <div class="video-desc" id="video-desc-text">
-        <strong>【一次足切り短縮・巡回証明】</strong> 手作業215分から2分への足切り短縮と、全国1,959自治体中1,885サイトの毎日巡回実績をグラフで可視化して解説します。
+        <strong>【3ステップの使い方】</strong> 1. 朝のメール/Slack通知 → 2. エリア・面積・種別での整理 → 3. 自治体公式ページ・PDFへの直行の流れを約50秒でご確認いただけます。
       </div>
     </div>
 
@@ -621,7 +621,7 @@
     const descText = document.getElementById('video-desc-text');
     const subSelector = document.getElementById('screen-sub-selector');
 
-    let currentTab = initialTab === 'overview' ? 'chart-ja' : initialTab;
+    let currentTab = initialTab === 'overview' ? 'usage-ja' : initialTab;
     let currentType = initialType;
     let maxWatchedSec = 0;
     let pauseEvents = [];
@@ -629,9 +629,9 @@
     let sessionStart = Date.now();
 
     const DESCRIPTIONS = {
-      'chart-ja': '<strong>【一次足切り短縮・巡回証明】</strong> 手作業215分から2分への足切り短縮と、全国1,959自治体中1,885サイトの毎日巡回実績をグラフで可視化して解説します。',
-      'global-en': '<strong>【Global English Demo】</strong> Automated daily scanning across 1,959 municipal portals in Japan. Instant screening for AI data centers, battery storage, and resort developments.',
-      overview: '<strong>【朝の仕入れ業務フロー実演】</strong> 朝の新着アラート確認から、土地面積・用途地域での10秒絞り込み、社内提出用週次CSV出力までの一連の業務の流れを約60秒でご確認いただけます。',
+      'usage-ja': '<strong>【3ステップの使い方】</strong> 1. 朝のメール/Slack通知 → 2. エリア・面積・種別での整理 → 3. 自治体公式ページ・PDFへの直行の流れを約50秒でご確認いただけます。',
+      'usage-en': '<strong>【How It Works】</strong> 1. Daily morning alert → 2. Criteria screening → 3. Direct access to official municipal tender PDFs (approx. 40 sec).',
+      'chart-ja': '<strong>【客観データ図解版】</strong> 全国1,961自治体の巡回実績（1,883サイト確認完了、76未確認）と、足切り短縮の構造をグラフで可視化して解説します。',
       resort: '<strong>【宿泊・グランピング・廃校向け実演】</strong> 敷地3,000㎡以上・用途非線引き・サウンディング対話ありの学校跡地を一瞬で絞り込み、社内検討用リストを出力するデモです。',
       energy: '<strong>【太陽光・インフラ向け実演】</strong> 敷地10,000㎡以上・随時売却（即購入・先着順）の平坦公有地をピンポイントで絞り込むデモです。',
       logistics: '<strong>【物流・産業用地向け実演】</strong> 敷地5,000㎡以上・準工業地域・幹線道路沿いの産業用地を一瞬で絞り込み、毎週の仕入れ会議用CSVを出力するデモです。'
@@ -674,23 +674,23 @@
       pauseEvents = [];
       seekEvents = [];
 
-      ['chart-ja', 'global-en', 'overview', 'screen'].forEach(t => {
+      ['usage-ja', 'usage-en', 'chart-ja', 'screen'].forEach(t => {
         const el = document.getElementById(`tab-${t}`);
         if (el) el.classList.toggle('active', tab === t);
       });
 
-      if (tab === 'chart-ja') {
+      if (tab === 'usage-ja') {
+        subSelector.style.display = 'none';
+        video.src = 'demo_usage_ja.mp4';
+        descText.innerHTML = DESCRIPTIONS['usage-ja'];
+      } else if (tab === 'usage-en') {
+        subSelector.style.display = 'none';
+        video.src = 'demo_usage_en.mp4';
+        descText.innerHTML = DESCRIPTIONS['usage-en'];
+      } else if (tab === 'chart-ja') {
         subSelector.style.display = 'none';
         video.src = 'demo_mvp_chart_ja.mp4';
         descText.innerHTML = DESCRIPTIONS['chart-ja'];
-      } else if (tab === 'global-en') {
-        subSelector.style.display = 'none';
-        video.src = 'demo_global_en.mp4';
-        descText.innerHTML = DESCRIPTIONS['global-en'];
-      } else if (tab === 'overview') {
-        subSelector.style.display = 'none';
-        video.src = 'demo_zundamon.mp4';
-        descText.innerHTML = DESCRIPTIONS.overview;
       } else {
         subSelector.style.display = 'flex';
         applyTypeVideo(currentType);
